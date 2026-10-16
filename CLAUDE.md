@@ -142,8 +142,8 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 |---|---|---|
 | 0 — Preparação e ativos | ✅ Concluída | Pastas, jsPDF 4.2.1, logo e fotos de teste |
 | 1 — Interface | ✅ Concluída | index.html e css/style.css |
-| 2 — Lógica e fotos | 🔄 Aguardando verificação | js/app.js e js/imagens.js; testado automaticamente no Chromium |
-| 3 — Geração do PDF | ⬜ Pendente | |
+| 2 — Lógica e fotos | ✅ Concluída | js/app.js e js/imagens.js |
+| 3 — Geração do PDF | 🔄 Aguardando verificação | js/pdf.js; 3 layouts, lista longa e casos difíceis testados no Chromium |
 | 4 — Uso real e ajustes | ⬜ Pendente | |
 | 5 — Revisão e README | ⬜ Pendente | |
 
@@ -192,6 +192,7 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 - Identidade: Tecno por padrão, logo trocável.
 - Execução: somente local, sem hospedagem.
 - Extras incluídos: data/período e escolha de fotos por página. Extras não incluídos: rascunho salvo, página de assinatura.
+- Layout do PDF (Etapa 3): margens de 20 mm (topo/base) e 25 mm (laterais); logo até 70×28 mm; Times 13 pt (título) e 12 pt (demais); foto de 1 por página ≈ 15×20 cm, como no exemplo; título da foto limitado a 35% da altura da célula (cortado com "...").
 - Versão do jsPDF: 4.2.1 (publicada em 2026-03-17, vendor/jspdf.umd.min.js)
 
 ## Pendências do usuário

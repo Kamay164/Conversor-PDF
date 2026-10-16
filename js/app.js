@@ -315,15 +315,53 @@
     return { ok: erros.length === 0, erros: erros, avisos: avisos };
   }
 
-  function aoClicarGerar() {
+  // ---------- Geração do PDF ----------
+  var urlVisualizacaoAnterior = null;
+
+  // modo: 'visualizar' (abre em nova aba) ou 'baixar' (salva o arquivo)
+  function gerarPdf(modo) {
+    if (processando) {
+      mostrarMensagens(el.mensagensAcoes, [{
+        tipo: 'alerta',
+        texto: 'Aguarde terminar de processar as fotos antes de gerar o PDF.'
+      }]);
+      return;
+    }
+
     var r = validar();
     var mensagens = [];
     r.erros.forEach(function (t) { mensagens.push({ tipo: 'erro', texto: t }); });
+    if (!r.ok) {
+      mostrarMensagens(el.mensagensAcoes, mensagens);
+      return;
+    }
     r.avisos.forEach(function (t) { mensagens.push({ tipo: 'alerta', texto: t }); });
-    if (r.ok) {
+
+    try {
+      var doc = window.GeradorPDF.criarDocumento(estado);
+      var nome = window.GeradorPDF.nomeArquivo(estado);
+
+      if (modo === 'visualizar') {
+        var url = doc.output('bloburl');
+        var aba = window.open(url, '_blank');
+        if (urlVisualizacaoAnterior) { URL.revokeObjectURL(urlVisualizacaoAnterior); }
+        urlVisualizacaoAnterior = url;
+        if (aba) {
+          mensagens.push({ tipo: 'ok', texto: 'PDF aberto em uma nova aba.' });
+        } else {
+          mensagens.push({
+            tipo: 'alerta',
+            texto: 'O navegador bloqueou a nova aba. Permita pop-ups para esta página ou use "Gerar PDF" para baixar o arquivo.'
+          });
+        }
+      } else {
+        doc.save(nome);
+        mensagens.push({ tipo: 'ok', texto: 'PDF gerado: ' + nome });
+      }
+    } catch (e) {
       mensagens.push({
-        tipo: 'ok',
-        texto: 'Tudo certo com os dados. A geração do PDF será feita na Etapa 3.'
+        tipo: 'erro',
+        texto: 'Não foi possível gerar o PDF: ' + (e && e.message ? e.message : e)
       });
     }
     mostrarMensagens(el.mensagensAcoes, mensagens);
@@ -421,8 +459,8 @@
   }
 
   function ligarAcoes() {
-    el.botaoGerar.addEventListener('click', aoClicarGerar);
-    el.botaoVisualizar.addEventListener('click', aoClicarGerar);
+    el.botaoGerar.addEventListener('click', function () { gerarPdf('baixar'); });
+    el.botaoVisualizar.addEventListener('click', function () { gerarPdf('visualizar'); });
   }
 
   // ---------- Início ----------
