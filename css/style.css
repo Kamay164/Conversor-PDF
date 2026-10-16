@@ -1,0 +1,305 @@
+/* Conversor de Fotos para Relatório em PDF – estilos (Etapa 1) */
+
+:root {
+  --laranja: #e8851c;
+  --laranja-escuro: #c96d0d;
+  --grafite: #26292e;
+  --cinza-texto: #5b6169;
+  --cinza-borda: #d9dce1;
+  --cinza-fundo: #f4f5f7;
+  --branco: #ffffff;
+  --vermelho: #b3261e;
+  --raio: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--grafite);
+  background: var(--cinza-fundo);
+}
+
+.container {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------- Topo ---------- */
+.topo {
+  background: var(--grafite);
+  color: var(--branco);
+  padding: 22px 0;
+  border-bottom: 4px solid var(--laranja);
+}
+.topo h1 { margin: 0 0 2px; font-size: 1.5rem; }
+.topo p { margin: 0; color: #c9ccd2; }
+
+/* ---------- Cartões ---------- */
+main { padding-top: 24px; padding-bottom: 48px; }
+
+.cartao {
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: var(--raio);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.cartao h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+}
+.numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--laranja);
+  color: var(--branco);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* ---------- Campos ---------- */
+.campo { margin-bottom: 14px; flex: 1; min-width: 0; }
+.campo label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.92rem; }
+.opcional { font-weight: 400; color: var(--cinza-texto); }
+.dica { margin: 0 0 8px; color: var(--cinza-texto); font-size: 0.92rem; }
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: inherit;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 8px;
+}
+textarea { resize: vertical; }
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+.botao:focus-visible,
+.area-envio:focus-within,
+.opcao input:focus-visible + .opcao-visual {
+  outline: 3px solid rgba(232, 133, 28, 0.45);
+  outline-offset: 1px;
+}
+
+.linha { display: flex; gap: 16px; }
+
+/* ---------- Botões ---------- */
+.botao,
+button {
+  font: inherit;
+  cursor: pointer;
+}
+.botao {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  text-align: center;
+}
+.botao-primario { background: var(--laranja); color: var(--branco); }
+.botao-primario:hover { background: var(--laranja-escuro); }
+.botao-secundario { background: var(--branco); color: var(--grafite); border-color: var(--cinza-borda); }
+.botao-secundario:hover { background: var(--cinza-fundo); }
+.botao-texto {
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  color: var(--cinza-texto);
+  text-decoration: underline;
+}
+.botao-texto:hover { color: var(--grafite); }
+.botao-perigo { color: var(--vermelho); }
+.botao-grande { padding: 14px 28px; font-size: 1.05rem; }
+
+.botao-icone {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--cinza-borda);
+  border-radius: 8px;
+  background: var(--branco);
+  font-size: 1rem;
+  line-height: 1;
+}
+.botao-icone:hover { background: var(--cinza-fundo); }
+
+/* ---------- Logo ---------- */
+.logo-bloco {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px;
+  margin-bottom: 18px;
+  background: var(--cinza-fundo);
+  border-radius: 8px;
+}
+.logo-previa {
+  flex: 0 0 auto;
+  padding: 8px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 8px;
+}
+.logo-previa img { display: block; width: 200px; max-width: 100%; height: auto; }
+.logo-acoes { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+
+/* ---------- Fotos ---------- */
+.area-envio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--cinza-texto);
+  background: var(--cinza-fundo);
+  border: 2px dashed #b8bcc4;
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+.area-envio strong { color: var(--grafite); font-size: 1.05rem; }
+.area-envio:hover { border-color: var(--laranja); background: #fff7ee; }
+
+.lista-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 8px;
+}
+.contador { font-weight: 600; }
+
+.lista-fotos { list-style: none; margin: 0; padding: 0; }
+.item-foto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 8px;
+}
+.item-foto .ordem {
+  flex: 0 0 24px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--cinza-texto);
+}
+.item-foto img {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--cinza-fundo);
+}
+.item-foto .campo { margin-bottom: 0; }
+.item-acoes { display: flex; gap: 6px; flex: 0 0 auto; }
+
+/* ---------- Layout do PDF ---------- */
+.opcoes-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.opcao { cursor: pointer; }
+.opcao input { position: absolute; opacity: 0; pointer-events: none; }
+.opcao-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  height: 100%;
+  text-align: center;
+  border: 2px solid var(--cinza-borda);
+  border-radius: var(--raio);
+  background: var(--branco);
+}
+.opcao-visual small { color: var(--cinza-texto); font-size: 0.8rem; }
+.opcao:hover .opcao-visual { border-color: #f0bd85; }
+.opcao input:checked + .opcao-visual { border-color: var(--laranja); background: #fff7ee; }
+
+.miniatura-layout {
+  display: grid;
+  gap: 4px;
+  width: 46px;
+  height: 62px;
+  padding: 4px;
+  margin-bottom: 4px;
+  background: var(--branco);
+  border: 1px solid #9aa0a8;
+  border-radius: 3px;
+}
+.miniatura-layout i { background: #c3c7ce; border-radius: 2px; }
+.miniatura-layout.um { grid-template-rows: 1fr; }
+.miniatura-layout.dois { grid-template-rows: 1fr 1fr; }
+.miniatura-layout.quatro { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+/* ---------- Ações finais ---------- */
+.acoes { display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 16px; }
+.rodape-nota { text-align: center; color: var(--cinza-texto); font-size: 0.85rem; }
+
+/* ---------- Telas estreitas ---------- */
+@media (max-width: 640px) {
+  .cartao { padding: 16px; }
+  .linha { flex-direction: column; gap: 0; }
+  .logo-bloco { flex-direction: column; align-items: flex-start; }
+  .item-foto { flex-wrap: wrap; }
+  .item-foto .campo { flex: 1 1 calc(100% - 120px); }
+  .item-acoes { margin-left: auto; }
+  .opcoes-layout { grid-template-columns: 1fr; }
+  .opcao-visual { flex-direction: row; justify-content: flex-start; text-align: left; gap: 12px; }
+  .miniatura-layout { margin-bottom: 0; flex: 0 0 auto; }
+  .acoes { flex-direction: column-reverse; }
+  .acoes .botao { width: 100%; }
+}
+
+/* ---------- Etapa 2: mensagens, progresso, estados ---------- */
+.mensagens:empty { display: none; }
+.mensagens { margin: 12px 0; display: flex; flex-direction: column; gap: 8px; }
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 0.92rem;
+}
+.aviso-erro   { background: #fdecea; border-color: #f2b8b5; color: #7a1a14; }
+.aviso-alerta { background: #fff4d6; border-color: #f0d38a; color: #6b4a00; }
+.aviso-ok     { background: #e7f5ea; border-color: #a9d6b3; color: #1b5e2c; }
+.aviso-fechar {
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 2px 4px;
+  opacity: 0.7;
+}
+.aviso-fechar:hover { opacity: 1; }
+
+.progresso { margin: 10px 0 0; font-weight: 600; color: var(--laranja-escuro); }
+.vazio { margin: 8px 0 0; padding: 16px; text-align: center; color: var(--cinza-texto); background: var(--cinza-fundo); border-radius: 8px; }
+.area-envio.arrastando { border-color: var(--laranja); background: #fff0dd; }
+
+button:disabled { cursor: not-allowed; opacity: 0.4; }
+.botao-texto:disabled { text-decoration: none; }
+[hidden] { display: none !important; }

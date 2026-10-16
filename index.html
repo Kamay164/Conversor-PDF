@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conversor de Fotos para Relatório em PDF</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="container">
+      <h1>Relatório de Serviços em PDF</h1>
+      <p>Envie as fotos, escreva os títulos e gere o relatório.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Cabeçalho do relatório -->
+    <section class="cartao" id="secao-cabecalho">
+      <h2><span class="numero">1</span> Cabeçalho do relatório</h2>
+
+      <div class="logo-bloco">
+        <div class="logo-previa">
+          <img id="logo-img" src="assets/logo-tecno.jpg" alt="Logo atual do relatório">
+        </div>
+        <div class="logo-acoes">
+          <p class="dica">Logo que aparece na primeira página.</p>
+          <button type="button" id="botao-trocar-logo" class="botao botao-secundario">Trocar logo</button>
+          <input type="file" id="entrada-logo" accept="image/jpeg,image/png,image/webp" hidden>
+          <button type="button" id="botao-restaurar-logo" class="botao botao-texto" disabled>Restaurar logo padrão</button>
+        </div>
+      </div>
+      <div id="mensagens-cabecalho" class="mensagens" role="status" aria-live="polite"></div>
+
+      <div class="campo">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" placeholder="Ex.: RELATÓRIO DE SERVIÇOS EXECUTADOS – RESIDÊNCIA JULIA E PEDRO">
+      </div>
+
+      <div class="campo">
+        <label for="subtitulo">Subtítulo</label>
+        <input type="text" id="subtitulo" placeholder="Ex.: REVESTIMENTO PISCINA EM TRAVERTINO">
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label for="data-inicial">Data inicial</label>
+          <input type="date" id="data-inicial">
+        </div>
+        <div class="campo">
+          <label for="data-final">Data final <span class="opcional">(opcional)</span></label>
+          <input type="date" id="data-final">
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Fotos -->
+    <section class="cartao" id="secao-fotos">
+      <h2><span class="numero">2</span> Fotos</h2>
+
+      <label class="area-envio" id="area-envio" for="entrada-fotos" tabindex="0">
+        <strong>Arraste as fotos aqui</strong>
+        <span>ou clique para escolher (JPG, PNG ou WebP)</span>
+      </label>
+      <input type="file" id="entrada-fotos" accept="image/jpeg,image/png,image/webp" multiple hidden>
+      <p id="progresso" class="progresso" role="status" aria-live="polite" hidden></p>
+      <div id="mensagens-fotos" class="mensagens" role="status" aria-live="polite"></div>
+
+      <div class="lista-cabecalho">
+        <span id="contador" class="contador">Nenhuma foto</span>
+        <button type="button" id="botao-remover-todas" class="botao botao-texto botao-perigo" hidden>Remover todas</button>
+      </div>
+
+      <p id="lista-vazia" class="vazio">As fotos que você enviar aparecem aqui, na ordem em que entrarão no PDF.</p>
+      <ul id="lista-fotos" class="lista-fotos"></ul>
+    </section>
+
+    <!-- 3. Layout do PDF -->
+    <section class="cartao" id="secao-layout">
+      <h2><span class="numero">3</span> Layout do PDF</h2>
+      <p class="dica">Quantas fotos por página?</p>
+      <div class="opcoes-layout" role="radiogroup" aria-label="Fotos por página">
+        <label class="opcao">
+          <input type="radio" name="fotos-por-pagina" value="1" checked>
+          <span class="opcao-visual">
+            <span class="miniatura-layout um"><i></i></span>
+            <strong>1 foto</strong>
+            <small>Grande, como no exemplo</small>
+          </span>
+        </label>
+        <label class="opcao">
+          <input type="radio" name="fotos-por-pagina" value="2">
+          <span class="opcao-visual">
+            <span class="miniatura-layout dois"><i></i><i></i></span>
+            <strong>2 fotos</strong>
+            <small>Uma abaixo da outra</small>
+          </span>
+        </label>
+        <label class="opcao">
+          <input type="radio" name="fotos-por-pagina" value="4">
+          <span class="opcao-visual">
+            <span class="miniatura-layout quatro"><i></i><i></i><i></i><i></i></span>
+            <strong>4 fotos</strong>
+            <small>Grade 2 × 2</small>
+          </span>
+        </label>
+      </div>
+    </section>
+
+    <!-- 4. Próximos passos -->
+    <section class="cartao" id="secao-proximos">
+      <h2><span class="numero">4</span> Próximos passos</h2>
+
+      <div class="campo">
+        <label for="titulo-proximos">Título da seção</label>
+        <input type="text" id="titulo-proximos" value="PREVISÃO PRÓXIMA SEMANA:">
+      </div>
+
+      <div class="campo">
+        <label for="proximos-passos">Itens <span class="opcional">(um por linha)</span></label>
+        <textarea id="proximos-passos" rows="7" placeholder="REVESTIMENTO PISCINA&#10;INÍCIO PINTURA INTERNA&#10;REJUNTAMENTO"></textarea>
+      </div>
+    </section>
+
+    <!-- 5. Ações -->
+    <section class="acoes">
+      <button type="button" id="botao-visualizar" class="botao botao-secundario botao-grande">Visualizar PDF</button>
+      <button type="button" id="botao-gerar" class="botao botao-primario botao-grande">Gerar PDF</button>
+    </section>
+    <div id="mensagens-acoes" class="mensagens" role="status" aria-live="polite"></div>
+
+    <p class="rodape-nota">Etapa 2: envio de fotos, títulos, ordem e logo já funcionam. A geração do PDF vem na Etapa 3.</p>
+  </main>
+
+  <script src="js/logo-padrao.js"></script>
+  <script src="js/imagens.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
