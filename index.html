@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Conversor de Fotos para Relatório em PDF</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <header class="topo">
     <div class="container">
@@ -28,19 +30,20 @@
           <p class="dica">Logo que aparece na primeira página.</p>
           <button type="button" id="botao-trocar-logo" class="botao botao-secundario">Trocar logo</button>
           <input type="file" id="entrada-logo" accept="image/jpeg,image/png,image/webp" hidden>
-          <button type="button" id="botao-restaurar-logo" class="botao botao-texto" disabled>Restaurar logo padrão</button>
+          <button type="button" id="botao-restaurar-logo" class="botao botao-texto" disabled>Restaurar logo
+            padrão</button>
         </div>
       </div>
       <div id="mensagens-cabecalho" class="mensagens" role="status" aria-live="polite"></div>
 
       <div class="campo">
         <label for="titulo">Título</label>
-        <input type="text" id="titulo" placeholder="Ex.: RELATÓRIO DE SERVIÇOS EXECUTADOS – RESIDÊNCIA JULIA E PEDRO">
+        <input type="text" id="titulo" placeholder="Ex.: RELATÓRIO DE SERVIÇOS EXECUTADOS">
       </div>
 
       <div class="campo">
         <label for="subtitulo">Subtítulo</label>
-        <input type="text" id="subtitulo" placeholder="Ex.: REVESTIMENTO PISCINA EM TRAVERTINO">
+        <input type="text" id="subtitulo" placeholder="Ex.: DIA 01 DA OBRA">
       </div>
 
       <div class="linha">
@@ -69,7 +72,8 @@
 
       <div class="lista-cabecalho">
         <span id="contador" class="contador">Nenhuma foto</span>
-        <button type="button" id="botao-remover-todas" class="botao botao-texto botao-perigo" hidden>Remover todas</button>
+        <button type="button" id="botao-remover-todas" class="botao botao-texto botao-perigo" hidden>Remover
+          todas</button>
       </div>
 
       <p id="lista-vazia" class="vazio">As fotos que você enviar aparecem aqui, na ordem em que entrarão no PDF.</p>
@@ -119,7 +123,8 @@
 
       <div class="campo">
         <label for="proximos-passos">Itens <span class="opcional">(um por linha)</span></label>
-        <textarea id="proximos-passos" rows="7" placeholder="REVESTIMENTO PISCINA&#10;INÍCIO PINTURA INTERNA&#10;REJUNTAMENTO"></textarea>
+        <textarea id="proximos-passos" rows="7"
+          placeholder="REVESTIMENTO PISCINA&#10;INÍCIO PINTURA INTERNA&#10;REJUNTAMENTO"></textarea>
       </div>
     </section>
 
@@ -139,4 +144,5 @@
   <script src="js/pdf.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
