@@ -1,4 +1,4 @@
-/* Conversor de Fotos para Relatório em PDF – estilos (Etapa 1) */
+/* Conversor de Fotos para Relatório em PDF – estilos da página */
 
 :root {
   --laranja: #e8851c;
@@ -268,7 +268,7 @@ button {
   .acoes .botao { width: 100%; }
 }
 
-/* ---------- Etapa 2: mensagens, progresso, estados ---------- */
+/* ---------- Mensagens, progresso e estados ---------- */
 .mensagens:empty { display: none; }
 .mensagens { margin: 12px 0; display: flex; flex-direction: column; gap: 8px; }
 .aviso {
@@ -303,3 +303,17 @@ button {
 button:disabled { cursor: not-allowed; opacity: 0.4; }
 .botao-texto:disabled { text-decoration: none; }
 [hidden] { display: none !important; }
+
+/* ---------- Logo opcional: espaço vazio quando não há logo ---------- */
+.logo-vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  max-width: 100%;
+  height: 74px;
+  color: var(--cinza-texto);
+  font-size: 0.9rem;
+  border: 1px dashed #b8bcc4;
+  border-radius: 6px;
+}

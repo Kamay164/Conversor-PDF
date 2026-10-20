@@ -42,7 +42,7 @@ Tudo acontece no navegador. Nenhuma foto sai do computador.
   - **Cada foto tem o seu próprio título** (no exemplo, um título valia para várias fotos). O título da foto pode ficar vazio.
   - **Data ou período** do relatório no cabeçalho da página 1.
   - **Escolha de fotos por página:** 1, 2 ou 4.
-  - **Logo da Tecno por padrão, mas trocável** pelo usuário (com opção de restaurar o padrão).
+  - **Logo opcional, sem logo padrão** (mudança da Etapa 4): o usuário adiciona, troca ou remove o logo; sem logo, o PDF começa pelo título.
   - **Não** incluir a página de assinatura "TECNO OBRAS CIVIS" do exemplo.
   - **Não** salvar rascunho (o estado vive só na memória da aba).
 
@@ -71,11 +71,11 @@ Conversor PDF/
 │   ├── app.js                ← estado da aplicação e eventos da interface
 │   ├── imagens.js            ← leitura, redimensionamento e compressão das fotos
 │   ├── pdf.js                ← montagem do PDF com jsPDF
-│   └── logo-padrao.js        ← logo padrão da Tecno em base64 (gerado na Etapa 0)
+│   └── logo-padrao.js        ← SEM USO desde a Etapa 4 (logo padrão removido); apagar só com autorização
 ├── vendor/
 │   └── jspdf.umd.min.js      ← cópia local do jsPDF (versão fixa)
 ├── assets/
-│   └── logo-tecno.(jpg|png)  ← logo original, só para referência
+│   └── logo-tecno.(jpg|png)  ← SEM USO desde a Etapa 4; apagar só com autorização
 └── referencia/
     ├── Relatorio-exemplo.pdf ← PDF de exemplo (fornecido pelo usuário; não alterar)
     └── fotos-teste/          ← fotos para testes (Etapa 0)
@@ -143,9 +143,9 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 | 0 — Preparação e ativos | ✅ Concluída | Pastas, jsPDF 4.2.1, logo e fotos de teste |
 | 1 — Interface | ✅ Concluída | index.html e css/style.css |
 | 2 — Lógica e fotos | ✅ Concluída | js/app.js e js/imagens.js |
-| 3 — Geração do PDF | 🔄 Aguardando verificação | js/pdf.js; 3 layouts, lista longa e casos difíceis testados no Chromium |
-| 4 — Uso real e ajustes | ⬜ Pendente | |
-| 5 — Revisão e README | ⬜ Pendente | |
+| 3 — Geração do PDF | ✅ Concluída | js/pdf.js; 3 layouts, lista longa e casos difíceis |
+| 4 — Uso real e ajustes | ✅ Concluída | Logo opcional sem padrão; "Grande" no layout de 1 foto; próximos passos em branco; título da seção só como sugestão |
+| 5 — Revisão e README | 🔄 Aguardando verificação | Comentários atualizados, função sem uso removida, README.md criado |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)
 
@@ -153,7 +153,7 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 
 - **Precisa funcionar abrindo `index.html` direto do disco (`file://`)**, sem servidor local. Consequências:
   - Usar `<script src="...">` clássicos; **não usar** `type="module"`, `import`/`export` nem `fetch()` de arquivos locais.
-  - O logo padrão fica embutido em base64 em `js/logo-padrao.js` (evita bloqueio de canvas com imagens locais).
+  - O logo enviado pelo usuário é lido do arquivo escolhido (sem `fetch`), então funciona via `file://`.
 - **Sem CDN em tempo de execução:** todas as bibliotecas ficam em `vendor/`. O site deve funcionar offline.
 - **Sem backend, sem banco de dados, sem login, sem frameworks** (React, Vue, Tailwind etc.) e sem etapa de build.
 - Única dependência externa permitida: jsPDF. Qualquer outra biblioteca exige autorização do usuário.
@@ -175,7 +175,7 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 ## Critérios de conclusão do projeto
 
 - [ ] Abre com duplo clique em `index.html` no Chrome e no Edge, sem internet.
-- [ ] Logo da Tecno aparece por padrão; dá para trocar e restaurar.
+- [ ] Logo opcional: começa sem logo; dá para adicionar, trocar e remover.
 - [ ] Título, subtítulo e data/período aparecem na página 1, no estilo do exemplo.
 - [ ] Várias fotos, cada uma com título próprio (opcional), na ordem definida pelo usuário.
 - [ ] Layouts de 1, 2 e 4 fotos por página funcionando, sem distorcer nem cortar fotos.
@@ -189,7 +189,7 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 ## Decisões registradas
 
 - Organização das fotos: um título por foto (opcional), mais o cabeçalho com logo, título e subtítulo na página 1.
-- Identidade: Tecno por padrão, logo trocável.
+- Identidade: logo opcional, sem logo padrão (decidido na Etapa 4; antes era o logo da Tecno por padrão).
 - Execução: somente local, sem hospedagem.
 - Extras incluídos: data/período e escolha de fotos por página. Extras não incluídos: rascunho salvo, página de assinatura.
 - Layout do PDF (Etapa 3): margens de 20 mm (topo/base) e 25 mm (laterais); logo até 70×28 mm; Times 13 pt (título) e 12 pt (demais); foto de 1 por página ≈ 15×20 cm, como no exemplo; título da foto limitado a 35% da altura da célula (cortado com "...").
@@ -198,7 +198,8 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 ## Pendências do usuário
 
 - Colocar o PDF de exemplo em `referencia/Relatorio-exemplo.pdf` (antes da Etapa 0).
-- Opcional: fornecer o logo da Tecno em melhor resolução (o do PDF é pequeno, ≈253×94 px).
+- Decidir se `js/logo-padrao.js` e `assets/logo-tecno.jpg` (sem uso desde a Etapa 4) podem ser apagados.
+- Proteger `referencia/` no Git (ver README/conversa): a pasta não deve ir para o GitHub.
 - Opcional: separar 1 ou 2 fotos horizontais e 1 foto HEIC de celular para os testes.
 
 ## Modelo recomendado por etapa (referência para o usuário)

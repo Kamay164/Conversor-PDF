@@ -1,8 +1,8 @@
-/* Conversor de Fotos para Relatório em PDF – montagem do PDF (Etapa 3)
+/* Conversor de Fotos para Relatório em PDF – montagem do PDF
  *
  * Recebe o estado do relatório (window.Relatorio.estado) e monta um PDF A4
  * com jsPDF, no estilo do relatório de exemplo da Tecno:
- *   - página 1: logo, título, subtítulo e data/período, seguidos das fotos;
+ *   - página 1: logo (opcional), título, subtítulo e data/período, seguidos das fotos;
  *   - fotos com título acima, 1, 2 ou 4 por página, sem distorcer nem cortar;
  *   - página final com os próximos passos em lista.
  * Exposto em window.GeradorPDF. Todas as medidas estão em milímetros.

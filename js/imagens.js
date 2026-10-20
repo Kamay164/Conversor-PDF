@@ -1,4 +1,4 @@
-/* Conversor de Fotos para Relatório em PDF – tratamento de imagens (Etapa 2)
+/* Conversor de Fotos para Relatório em PDF – tratamento de imagens
  *
  * Lê, valida, redimensiona e comprime as fotos no próprio navegador.
  * Nenhuma imagem sai do computador do usuário.
@@ -146,24 +146,9 @@
     });
   }
 
-  /** Descobre largura e altura de uma imagem a partir do data URL. */
-  function carregarDimensoes(dataUrl) {
-    return new Promise(function (resolve, reject) {
-      var img = new Image();
-      img.onload = function () {
-        resolve({ largura: img.naturalWidth, altura: img.naturalHeight });
-      };
-      img.onerror = function () {
-        reject(new Error('Não foi possível ler a imagem.'));
-      };
-      img.src = dataUrl;
-    });
-  }
-
   window.Imagens = {
     validarArquivo: validarArquivo,
     processarFoto: processarFoto,
-    processarLogo: processarLogo,
-    carregarDimensoes: carregarDimensoes
+    processarLogo: processarLogo
   };
 })();

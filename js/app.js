@@ -1,15 +1,15 @@
-/* Conversor de Fotos para Relatório em PDF – lógica da interface (Etapa 2)
+/* Conversor de Fotos para Relatório em PDF – lógica da interface
  *
  * Mantém o estado do relatório em um único objeto, em memória, e liga os
- * campos, a lista de fotos e os botões. A geração do PDF fica para a Etapa 3.
+ * campos, a lista de fotos e os botões. A montagem do PDF fica em js/pdf.js
+ * e o tratamento das fotos em js/imagens.js.
  */
 (function () {
   'use strict';
 
   // ---------- Estado único da aplicação ----------
   var estado = {
-    logo: null,              // { dataUrl, largura, altura } – logo em uso
-    logoPadrao: null,        // { dataUrl, largura, altura } – logo da Tecno
+    logo: null,              // { dataUrl, largura, altura } – opcional; null = relatório sem logo
     titulo: '',
     subtitulo: '',
     dataInicial: '',
@@ -27,8 +27,9 @@
 
   var el = {
     logoImg: porId('logo-img'),
+    logoVazio: porId('logo-vazio'),
     botaoTrocarLogo: porId('botao-trocar-logo'),
-    botaoRestaurarLogo: porId('botao-restaurar-logo'),
+    botaoRemoverLogo: porId('botao-remover-logo'),
     entradaLogo: porId('entrada-logo'),
     mensagensCabecalho: porId('mensagens-cabecalho'),
     titulo: porId('titulo'),
@@ -76,31 +77,18 @@
   }
 
   // ---------- Logo ----------
+  // O logo é opcional: sem logo, a prévia mostra "Sem logo" e o PDF começa pelo título.
   function atualizarLogo() {
-    if (estado.logo) { el.logoImg.src = estado.logo.dataUrl; }
-    el.botaoRestaurarLogo.disabled = (estado.logo === estado.logoPadrao);
-  }
-
-  function iniciarLogoPadrao() {
-    if (!window.LOGO_PADRAO) {
-      mostrarMensagens(el.mensagensCabecalho, [{
-        tipo: 'erro',
-        texto: 'Não encontrei o logo padrão (arquivo js/logo-padrao.js). Você ainda pode enviar um logo próprio.'
-      }]);
-      el.botaoRestaurarLogo.disabled = true;
-      return;
+    var temLogo = !!estado.logo;
+    if (temLogo) {
+      el.logoImg.src = estado.logo.dataUrl;
+    } else {
+      el.logoImg.removeAttribute('src');
     }
-    // Usa as medidas reais da imagem, que a Etapa 3 vai precisar.
-    window.Imagens.carregarDimensoes(window.LOGO_PADRAO).then(function (dim) {
-      estado.logoPadrao = { dataUrl: window.LOGO_PADRAO, largura: dim.largura, altura: dim.altura };
-      estado.logo = estado.logoPadrao;
-      atualizarLogo();
-    }).catch(function () {
-      mostrarMensagens(el.mensagensCabecalho, [{
-        tipo: 'erro',
-        texto: 'O logo padrão está corrompido. Você ainda pode enviar um logo próprio.'
-      }]);
-    });
+    el.logoImg.hidden = !temLogo;
+    el.logoVazio.hidden = temLogo;
+    el.botaoTrocarLogo.textContent = temLogo ? 'Trocar logo' : 'Adicionar logo';
+    el.botaoRemoverLogo.disabled = !temLogo;
   }
 
   function trocarLogo(arquivo) {
@@ -400,11 +388,11 @@
       if (el.entradaLogo.files.length > 0) { trocarLogo(el.entradaLogo.files[0]); }
       el.entradaLogo.value = '';
     });
-    el.botaoRestaurarLogo.addEventListener('click', function () {
-      if (!estado.logoPadrao) { return; }
+    el.botaoRemoverLogo.addEventListener('click', function () {
       limparMensagens(el.mensagensCabecalho);
-      estado.logo = estado.logoPadrao;
+      estado.logo = null;
       atualizarLogo();
+      el.botaoTrocarLogo.focus();
     });
   }
 
@@ -469,8 +457,8 @@
   ligarFotos();
   ligarAcoes();
   renderizarFotos();
-  iniciarLogoPadrao();
+  atualizarLogo();
 
-  // A Etapa 3 usa estes dois itens para montar o PDF.
+  // Acesso ao estado para depuração no console (F12) e testes automáticos.
   window.Relatorio = { estado: estado, validar: validar };
 })();
