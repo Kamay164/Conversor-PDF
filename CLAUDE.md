@@ -145,7 +145,7 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 | 2 — Lógica e fotos | ✅ Concluída | js/app.js e js/imagens.js |
 | 3 — Geração do PDF | ✅ Concluída | js/pdf.js; 3 layouts, lista longa e casos difíceis |
 | 4 — Uso real e ajustes | ✅ Concluída | Logo opcional sem padrão; "Grande" no layout de 1 foto; próximos passos em branco; título da seção só como sugestão |
-| 5 — Revisão e README | 🔄 Aguardando verificação | Comentários atualizados, função sem uso removida, README.md (uso online). Extras pedidos: qualidade Normal/Alta e layout "Tamanho da foto" |
+| 5 — Revisão e README | ✅ Concluída | Revisão do código, README.md (uso online), .gitignore com referencia/ e demo/. Extras: qualidade Normal/Alta e layout "Tamanho da foto" |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)
 
@@ -174,17 +174,20 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 
 ## Critérios de conclusão do projeto
 
-- [ ] Abre com duplo clique em `index.html` no Chrome e no Edge, sem internet.
-- [ ] Logo opcional: começa sem logo; dá para adicionar, trocar e remover.
-- [ ] Título, subtítulo e data/período aparecem na página 1, no estilo do exemplo.
-- [ ] Várias fotos, cada uma com título próprio (opcional), na ordem definida pelo usuário.
-- [ ] Layouts de 1, 2 e 4 fotos por página funcionando, sem distorcer nem cortar fotos.
-- [ ] Página de próximos passos com lista de marcadores, quebrando página quando necessário.
-- [ ] Acentuação correta em todo o PDF.
-- [ ] PDF de 20 fotos com tamanho razoável (≤ ~5 MB no layout de 1 foto por página).
-- [ ] Mensagens claras para formatos de imagem não suportados.
-- [ ] README de uso em português.
-- [ ] Nenhum erro no console durante o uso normal.
+Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferência do usuário no site publicado.
+
+- [x] Funciona online (Vercel) e também com duplo clique em `index.html`, sem internet.
+- [x] Logo opcional: começa sem logo; dá para adicionar, trocar e remover.
+- [x] Título, subtítulo e data/período aparecem na página 1, no estilo do exemplo.
+- [x] Várias fotos, cada uma com título próprio (opcional), na ordem definida pelo usuário.
+- [x] Layouts de 1, 2 e 4 fotos por página e "Tamanho da foto", sem distorcer nem cortar fotos.
+- [x] Qualidade Normal e Alta, com troca a qualquer momento.
+- [x] Página de próximos passos com lista de marcadores, quebrando página quando necessário.
+- [x] Acentuação correta em todo o PDF.
+- [x] PDF de 20 fotos com tamanho razoável (≈ 4,7 MB no layout de 1 foto por página, qualidade Normal).
+- [x] Mensagens claras para formatos de imagem não suportados.
+- [x] README de uso em português.
+- [x] Nenhum erro no console durante o uso normal.
 
 ## Decisões registradas
 
@@ -199,10 +202,8 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 
 ## Pendências do usuário
 
-- Colocar o PDF de exemplo em `referencia/Relatorio-exemplo.pdf` (antes da Etapa 0).
 - Decidir se `js/logo-padrao.js` e `assets/logo-tecno.jpg` (sem uso desde a Etapa 4) podem ser apagados.
-- Proteger `referencia/` no Git (ver README/conversa): a pasta não deve ir para o GitHub.
-- Opcional: separar 1 ou 2 fotos horizontais e 1 foto HEIC de celular para os testes.
+- Tirar `referencia/` e `demo/` do repositório no GitHub (`git rm -r --cached --ignore-unmatch referencia demo`, commit e push) e, se quiser, limpar o histórico.
 
 ## Modelo recomendado por etapa (referência para o usuário)
 

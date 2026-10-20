@@ -69,13 +69,13 @@ Conversor PDF/
 ├── js/imagens.js       leitura, redução e compressão das fotos
 ├── js/pdf.js           montagem do PDF
 ├── vendor/             jsPDF (biblioteca que gera o PDF)
-├── demo/               versão de demonstração em arquivo único (marca d'água, até 5 fotos)
+├── demo/               versão de demonstração em arquivo único (marca d'água, até 5 fotos) – só no computador
 ├── CLAUDE.md           planejamento e regras do projeto
 ├── README.md           este arquivo
-└── .gitignore          deixa a pasta referencia/ fora do Git (e do site publicado)
+└── .gitignore          deixa referencia/ e demo/ fora do Git (e do site publicado)
 ```
 
-A pasta `demo/` é uma cópia separada, feita para apresentação a clientes. Ela **não é atualizada** quando o site principal muda.
+A pasta `demo/` é uma cópia separada, feita para apresentação a clientes: ela **não é atualizada** quando o site principal muda e **não vai para o GitHub**. A pasta `referencia/` (relatório e fotos de exemplo de um cliente) também fica só no computador.
 
 ---
 
@@ -84,7 +84,15 @@ A pasta `demo/` é uma cópia separada, feita para apresentação a clientes. El
 O site é estático: a Vercel só entrega os arquivos `index.html`, `css/`, `js/` e `vendor/`. Não há servidor nem banco de dados.
 
 - Cada `git push` na branch `main` gera uma nova versão do site automaticamente.
-- A pasta `referencia/` (relatório e fotos de exemplo de um cliente) **não deve ir para o GitHub nem para o site**. O `.gitignore` garante isso.
+- As pastas `referencia/` (relatório e fotos de exemplo de um cliente) e `demo/` **não vão para o GitHub nem para o site**. O `.gitignore` garante isso para arquivos novos.
+- Se essas pastas já tinham sido enviadas antes do `.gitignore`, tire-as do repositório (os arquivos continuam no computador):
+
+  ```
+  git rm -r --cached --ignore-unmatch referencia demo
+  git add .
+  git commit -m "chore: remove referencia e demo do repositório"
+  git push
+  ```
 - Para trocar de endereço (domínio próprio), configure o domínio no painel da Vercel. Não é preciso mudar o código.
 
 ### Testar no computador sem publicar

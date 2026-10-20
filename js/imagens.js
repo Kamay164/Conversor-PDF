@@ -1,7 +1,7 @@
 /* Conversor de Fotos para Relatório em PDF – tratamento de imagens
  *
  * Lê, valida, redimensiona e comprime as fotos no próprio navegador.
- * Nenhuma imagem sai do computador do usuário.
+ * Nenhuma imagem sai do aparelho do usuário (computador ou celular).
  * Exposto em window.Imagens (script clássico, sem módulos, para funcionar via file://).
  */
 (function () {
