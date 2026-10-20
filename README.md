@@ -77,30 +77,6 @@ Conversor PDF/
 
 A pasta `demo/` é uma cópia separada, feita para apresentação a clientes: ela **não é atualizada** quando o site principal muda e **não vai para o GitHub**. A pasta `referencia/` (relatório e fotos de exemplo de um cliente) também fica só no computador.
 
----
-
-## Publicação (Vercel)
-
-O site é estático: a Vercel só entrega os arquivos `index.html`, `css/`, `js/` e `vendor/`. Não há servidor nem banco de dados.
-
-- Cada `git push` na branch `main` gera uma nova versão do site automaticamente.
-- As pastas `referencia/` (relatório e fotos de exemplo de um cliente) e `demo/` **não vão para o GitHub nem para o site**. O `.gitignore` garante isso para arquivos novos.
-- Se essas pastas já tinham sido enviadas antes do `.gitignore`, tire-as do repositório (os arquivos continuam no computador):
-
-  ```
-  git rm -r --cached --ignore-unmatch referencia demo
-  git add .
-  git commit -m "chore: remove referencia e demo do repositório"
-  git push
-  ```
-- Para trocar de endereço (domínio próprio), configure o domínio no painel da Vercel. Não é preciso mudar o código.
-
-### Testar no computador sem publicar
-
-Dê duplo clique em `index.html`: o site também funciona direto do disco, sem internet. Mantenha o `index.html` junto das pastas `css`, `js` e `vendor`.
-
----
-
 ## Tecnologias e licença
 
 - HTML, CSS e JavaScript, sem servidor, sem banco de dados e sem instalação.
