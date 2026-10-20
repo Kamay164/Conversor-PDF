@@ -56,7 +56,7 @@ Somente ferramentas **gratuitas**, sem servidor e sem etapa de build:
 | Geração do PDF | **jsPDF** (licença MIT), cópia local em `vendor/` | Gera PDF no navegador com texto e imagens; funciona offline |
 | Tratamento de fotos | Canvas do navegador | Redimensionar e comprimir sem bibliotecas extras |
 | Navegadores-alvo | Google Chrome e Microsoft Edge (Windows) | Navegadores do usuário |
-| Hospedagem | **Nenhuma** — uso local | Decisão do usuário |
+| Hospedagem | **Vercel** (site estático, via GitHub); talvez domínio próprio no futuro | Decisão do usuário (antes: só local) |
 
 ## Estrutura de pastas
 
@@ -145,7 +145,7 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 | 2 — Lógica e fotos | ✅ Concluída | js/app.js e js/imagens.js |
 | 3 — Geração do PDF | ✅ Concluída | js/pdf.js; 3 layouts, lista longa e casos difíceis |
 | 4 — Uso real e ajustes | ✅ Concluída | Logo opcional sem padrão; "Grande" no layout de 1 foto; próximos passos em branco; título da seção só como sugestão |
-| 5 — Revisão e README | 🔄 Aguardando verificação | Comentários atualizados, função sem uso removida, README.md criado |
+| 5 — Revisão e README | 🔄 Aguardando verificação | Comentários atualizados, função sem uso removida, README.md (uso online). Extras pedidos: qualidade Normal/Alta e layout "Tamanho da foto" |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)
 
@@ -190,9 +190,11 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 
 - Organização das fotos: um título por foto (opcional), mais o cabeçalho com logo, título e subtítulo na página 1.
 - Identidade: logo opcional, sem logo padrão (decidido na Etapa 4; antes era o logo da Tecno por padrão).
-- Execução: somente local, sem hospedagem.
+- Execução: online, hospedado na Vercel (o site continua funcionando também via `file://` para testes). `referencia/` nunca vai para o GitHub nem para o site.
 - Extras incluídos: data/período e escolha de fotos por página. Extras não incluídos: rascunho salvo, página de assinatura.
 - Layout do PDF (Etapa 3): margens de 20 mm (topo/base) e 25 mm (laterais); logo até 70×28 mm; Times 13 pt (título) e 12 pt (demais); foto de 1 por página ≈ 15×20 cm, como no exemplo; título da foto limitado a 35% da altura da célula (cortado com "...").
+- Qualidade das fotos (pedido após a Etapa 5): cada foto é preparada no envio em duas versões, Normal (1600 px, JPEG 80%) e Alta (2400 px, JPEG 90%); o usuário escolhe no layout e pode trocar a qualquer momento.
+- Layout "Tamanho da foto" (pedido após a Etapa 5): uma página por foto, largura 210 mm e altura pela proporção da foto, foto de ponta a ponta; título numa faixa branca acima; cabeçalho na 1ª página; próximos passos em A4.
 - Versão do jsPDF: 4.2.1 (publicada em 2026-03-17, vendor/jspdf.umd.min.js)
 
 ## Pendências do usuário

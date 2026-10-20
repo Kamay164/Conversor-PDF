@@ -2,25 +2,18 @@
 
 Site simples que transforma fotos de obra em um **relatório em PDF**: cabeçalho com logo, título e período, uma foto por vez com título próprio e, no final, a lista de próximos passos.
 
-Tudo acontece no próprio computador. As fotos **não são enviadas para a internet** e o site funciona sem conexão.
+O site é usado **online**, pelo navegador do computador ou do celular. Mesmo assim, as fotos **não são enviadas para nenhum servidor**: o PDF é montado no próprio aparelho de quem usa.
 
 ---
 
-## Como abrir
+## Como acessar
 
-1. Abra a pasta do projeto.
-2. Dê **duplo clique em `index.html`**.
-3. O site abre no navegador padrão. Funciona no **Google Chrome** e no **Microsoft Edge**.
+Abra o **endereço do site** no navegador. Hoje ele está hospedado na **Vercel**. Se um dia passar para um domínio próprio, só o endereço muda: o uso é o mesmo.
 
-Não precisa instalar nada nem estar conectado à internet.
+- **Computador:** funciona no Google Chrome e no Microsoft Edge. Dica: salve o endereço nos favoritos.
+- **Celular:** funciona no Chrome (Android) e no Safari (iPhone). Para abrir com um toque, como um aplicativo, use a opção **Adicionar à tela inicial** do navegador.
 
-### Criar um atalho na área de trabalho (Windows)
-
-1. Clique com o botão direito em `index.html`.
-2. Escolha **Enviar para** → **Área de trabalho (criar atalho)**. No Windows 11, clique antes em **Mostrar mais opções**.
-3. Para abrir o site, use o atalho que aparece na área de trabalho.
-
-> Mantenha o `index.html` dentro da pasta do projeto: ele precisa das pastas `css`, `js` e `vendor` ao lado dele.
+Não precisa instalar nada nem criar conta.
 
 ---
 
@@ -34,7 +27,10 @@ Não precisa instalar nada nem estar conectado à internet.
    - Arraste as fotos para a área tracejada ou clique nela para escolher. Dá para enviar várias de uma vez.
    - Escreva o **título de cada foto** (opcional). Ele aparece em negrito acima da foto.
    - Use **↑** e **↓** para mudar a ordem e **✕** para remover. **Remover todas** limpa a lista.
-3. **Layout do PDF**: escolha **1 foto** (grande), **2 fotos** (uma abaixo da outra) ou **4 fotos** (grade 2 × 2) por página.
+3. **Layout do PDF**
+   - **1 foto** (grande), **2 fotos** (uma abaixo da outra) ou **4 fotos** (grade 2 × 2) por página A4.
+   - **Tamanho da foto**: cada foto ganha uma página própria no formato dela (largura de uma folha A4 e a altura que a foto pede). A foto ocupa a página inteira, sem sobra branca; foto em pé gera página em pé e foto deitada, página deitada. O título fica numa faixa branca acima da foto.
+   - **Qualidade**: **Normal** (arquivo menor, bom para WhatsApp e e-mail) ou **Alta** (melhor para imprimir, arquivo maior). Dá para trocar a qualquer momento, mesmo depois de enviar as fotos.
 4. **Próximos passos**
    - *Título da seção* (opcional), por exemplo "PREVISÃO PRÓXIMA SEMANA:".
    - *Itens*: um por linha. No PDF, cada linha vira um item com marcador.
@@ -51,14 +47,15 @@ O nome do arquivo é criado automaticamente a partir do título e da data inicia
 - **Fotos do iPhone (HEIC) não são aceitas pelo navegador.** O site mostra um aviso. Para resolver:
   - no iPhone, vá em **Ajustes → Câmera → Formatos → Mais Compatível** (as próximas fotos saem em JPG); ou
   - envie as fotos para o computador pelo WhatsApp ou e-mail, que já convertem para JPG.
-- **Fotos grandes são reduzidas automaticamente** (lado maior de até 1600 px) para o PDF não ficar pesado. Um relatório com 20 fotos fica em torno de 5 MB.
+- **Fotos grandes são reduzidas automaticamente** para o PDF não ficar pesado: até 1600 px no lado maior na qualidade Normal e até 2400 px na Alta. Com 20 fotos, a Normal fica em torno de 5 MB; a Alta pode ficar 2 a 3 vezes maior quando as fotos são de câmera (originais grandes).
+- **A qualidade Alta não melhora foto que já chegou comprimida** (por exemplo, foto recebida pelo WhatsApp). Para o melhor resultado, use as fotos originais do celular.
 - **Fotos nunca são cortadas nem distorcidas.** Fotos deitadas ocupam a largura e fotos em pé ocupam a altura disponível.
 - **Títulos muito longos** quebram em várias linhas. Se passarem de cerca de um terço da altura do espaço da foto, o final é cortado com "...".
 - Se o botão **Visualizar PDF** não abrir nada, o navegador pode ter bloqueado o pop-up. Permita pop-ups para a página ou use **Gerar PDF**.
 
-### Uso no celular
+### Celular
 
-Abrir o `index.html` pelo celular (por exemplo, recebido pelo WhatsApp) **não funciona bem**: o celular abre o arquivo num leitor que não deixa baixar o PDF. Para usar no celular, o site precisa estar hospedado online (Vercel, Netlify ou GitHub Pages hospedam de graça um site como este).
+No celular, o PDF é baixado pelo próprio navegador e fica na pasta de downloads (Android) ou em **Arquivos** (iPhone). Dá para mandar o relatório pelo WhatsApp ou e-mail direto de lá.
 
 ---
 
@@ -66,7 +63,7 @@ Abrir o `index.html` pelo celular (por exemplo, recebido pelo WhatsApp) **não f
 
 ```
 Conversor PDF/
-├── index.html          página do site (abra esta)
+├── index.html          página do site
 ├── css/style.css       visual da página
 ├── js/app.js           campos, lista de fotos e botões
 ├── js/imagens.js       leitura, redução e compressão das fotos
@@ -74,10 +71,25 @@ Conversor PDF/
 ├── vendor/             jsPDF (biblioteca que gera o PDF)
 ├── demo/               versão de demonstração em arquivo único (marca d'água, até 5 fotos)
 ├── CLAUDE.md           planejamento e regras do projeto
-└── README.md           este arquivo
+├── README.md           este arquivo
+└── .gitignore          deixa a pasta referencia/ fora do Git (e do site publicado)
 ```
 
 A pasta `demo/` é uma cópia separada, feita para apresentação a clientes. Ela **não é atualizada** quando o site principal muda.
+
+---
+
+## Publicação (Vercel)
+
+O site é estático: a Vercel só entrega os arquivos `index.html`, `css/`, `js/` e `vendor/`. Não há servidor nem banco de dados.
+
+- Cada `git push` na branch `main` gera uma nova versão do site automaticamente.
+- A pasta `referencia/` (relatório e fotos de exemplo de um cliente) **não deve ir para o GitHub nem para o site**. O `.gitignore` garante isso.
+- Para trocar de endereço (domínio próprio), configure o domínio no painel da Vercel. Não é preciso mudar o código.
+
+### Testar no computador sem publicar
+
+Dê duplo clique em `index.html`: o site também funciona direto do disco, sem internet. Mantenha o `index.html` junto das pastas `css`, `js` e `vendor`.
 
 ---
 

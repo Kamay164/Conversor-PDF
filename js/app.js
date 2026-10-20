@@ -15,7 +15,8 @@
     dataInicial: '',
     dataFinal: '',
     fotos: [],               // { id, nome, dataUrl, miniatura, largura, altura, titulo }
-    fotosPorPagina: 1,
+    fotosPorPagina: 1,       // 1, 2, 4 ou 'foto' (página do tamanho da foto)
+    qualidade: 'normal',     // 'normal' ou 'alta'
     tituloProximos: '',
     proximosPassos: ''
   };
@@ -259,6 +260,7 @@
           id: 'f' + (proximoId++),
           nome: arquivo.name,
           dataUrl: resultado.dataUrl,
+          dataUrlAlta: resultado.dataUrlAlta,
           miniatura: resultado.miniatura,
           largura: resultado.largura,
           altura: resultado.altura,
@@ -366,7 +368,9 @@
     estado.tituloProximos = el.tituloProximos.value;
     estado.proximosPassos = el.proximosPassos.value;
     var marcada = document.querySelector('input[name="fotos-por-pagina"]:checked');
-    estado.fotosPorPagina = marcada ? parseInt(marcada.value, 10) : 1;
+    estado.fotosPorPagina = marcada ? valorDoLayout(marcada.value) : 1;
+    var qualidadeMarcada = document.querySelector('input[name="qualidade"]:checked');
+    estado.qualidade = qualidadeMarcada ? qualidadeMarcada.value : 'normal';
 
     el.titulo.addEventListener('input', function () { estado.titulo = el.titulo.value; });
     el.subtitulo.addEventListener('input', function () { estado.subtitulo = el.subtitulo.value; });
@@ -377,9 +381,19 @@
 
     Array.prototype.forEach.call(document.querySelectorAll('input[name="fotos-por-pagina"]'), function (radio) {
       radio.addEventListener('change', function () {
-        if (radio.checked) { estado.fotosPorPagina = parseInt(radio.value, 10); }
+        if (radio.checked) { estado.fotosPorPagina = valorDoLayout(radio.value); }
       });
     });
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="qualidade"]'), function (radio) {
+      radio.addEventListener('change', function () {
+        if (radio.checked) { estado.qualidade = radio.value; }
+      });
+    });
+  }
+
+  // "foto" = página do tamanho da foto; os demais valores são fotos por página.
+  function valorDoLayout(valor) {
+    return valor === 'foto' ? 'foto' : parseInt(valor, 10);
   }
 
   function ligarLogo() {

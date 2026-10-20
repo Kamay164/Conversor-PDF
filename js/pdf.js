@@ -3,7 +3,8 @@
  * Recebe o estado do relatório (window.Relatorio.estado) e monta um PDF A4
  * com jsPDF, no estilo do relatório de exemplo da Tecno:
  *   - página 1: logo (opcional), título, subtítulo e data/período, seguidos das fotos;
- *   - fotos com título acima, 1, 2 ou 4 por página, sem distorcer nem cortar;
+ *   - fotos com título acima, 1, 2 ou 4 por página (A4) ou uma página do tamanho
+ *     de cada foto, sempre sem distorcer nem cortar;
  *   - página final com os próximos passos em lista.
  * Exposto em window.GeradorPDF. Todas as medidas estão em milímetros.
  */
@@ -124,18 +125,23 @@
 
   // ---------- Cabeçalho (página 1) ----------
 
-  /** Desenha logo, título, subtítulo e período. Retorna o y onde as fotos começam. */
-  function desenharCabecalho(doc, estado) {
+  /**
+   * Logo, título, subtítulo e período. Com `desenhar = false` só mede.
+   * Retorna o y onde as fotos começam, ou null se o cabeçalho estiver vazio.
+   */
+  function cabecalho(doc, estado, desenhar) {
     var y = MARGEM.topo;
-    var desenhouAlgo = false;
+    var temAlgo = false;
 
     if (estado.logo) {
       var escala = Math.min(LOGO_MAX.largura / estado.logo.largura, LOGO_MAX.altura / estado.logo.altura);
       var w = estado.logo.largura * escala;
       var h = estado.logo.altura * escala;
-      doc.addImage(estado.logo.dataUrl, formatoDaImagem(estado.logo.dataUrl), CENTRO_X - w / 2, y, w, h, 'logo');
+      if (desenhar) {
+        doc.addImage(estado.logo.dataUrl, formatoDaImagem(estado.logo.dataUrl), CENTRO_X - w / 2, y, w, h, 'logo');
+      }
       y += h + ESPACO.aposLogo;
-      desenhouAlgo = true;
+      temAlgo = true;
     }
 
     var textos = [
@@ -146,14 +152,30 @@
     textos.forEach(function (item) {
       var linhas = quebrarLinhas(doc, item.texto, item.estilo, LARGURA_UTIL);
       if (linhas.length === 0) { return; }
-      y = escreverCentralizado(doc, linhas, item.estilo, CENTRO_X, y) + ESPACO.entreTextos;
-      desenhouAlgo = true;
+      if (desenhar) {
+        y = escreverCentralizado(doc, linhas, item.estilo, CENTRO_X, y);
+      } else {
+        y += linhas.length * alturaLinha(item.estilo);
+      }
+      y += ESPACO.entreTextos;
+      temAlgo = true;
     });
 
-    return desenhouAlgo ? y + ESPACO.aposCabecalho : MARGEM.topo;
+    return temAlgo ? y + ESPACO.aposCabecalho : null;
+  }
+
+  /** Desenha o cabeçalho na página A4. Retorna o y onde as fotos começam. */
+  function desenharCabecalho(doc, estado) {
+    var y = cabecalho(doc, estado, true);
+    return y === null ? MARGEM.topo : y;
   }
 
   // ---------- Páginas de fotos ----------
+
+  /** Versão da foto conforme a qualidade escolhida ("normal" ou "alta"). */
+  function imagemDaFoto(foto, qualidade) {
+    return (qualidade === 'alta' && foto.dataUrlAlta) ? foto.dataUrlAlta : foto.dataUrl;
+  }
 
   function gradeDoLayout(fotosPorPagina) {
     if (fotosPorPagina === 4) { return { colunas: 2, linhas: 2 }; }
@@ -180,7 +202,7 @@
    * fotos lado a lado fiquem alinhadas. A foto cabe inteira na célula,
    * mantendo a proporção, centralizada na horizontal e logo abaixo do título.
    */
-  function desenharFotos(doc, fotos, fotosPorPagina, topo) {
+  function desenharFotos(doc, fotos, fotosPorPagina, topo, qualidade) {
     var grade = gradeDoLayout(fotosPorPagina);
     var alturaUtil = PAGINA.altura - MARGEM.base - topo;
     var larguraCelula = (LARGURA_UTIL - ESPACO.entreFotos * (grade.colunas - 1)) / grade.colunas;
@@ -216,7 +238,7 @@
         var escala = Math.min(larguraCelula / foto.largura, alturaCaixaFoto / foto.altura);
         var w = foto.largura * escala;
         var h = foto.altura * escala;
-        doc.addImage(foto.dataUrl, 'JPEG', cx - w / 2, yLinha + areaTitulo, w, h, foto.id);
+        doc.addImage(imagemDaFoto(foto, qualidade), 'JPEG', cx - w / 2, yLinha + areaTitulo, w, h, foto.id);
       });
     }
   }
@@ -235,7 +257,7 @@
     var itens = itensDaLista(texto);
     if (itens.length === 0) { return; }
 
-    doc.addPage();
+    doc.addPage('a4', 'portrait');
     var y = MARGEM.topo;
     var limiteY = PAGINA.altura - MARGEM.base;
 
@@ -253,7 +275,7 @@
       var linhas = quebrarLinhas(doc, item, ESTILO.itemProximos, larguraTexto);
       linhas.forEach(function (linha, i) {
         if (y + h > limiteY) {
-          doc.addPage();
+          doc.addPage('a4', 'portrait');
           y = MARGEM.topo;
         }
         aplicarEstilo(doc, ESTILO.itemProximos);
@@ -268,16 +290,62 @@
     });
   }
 
+  // ---------- Layout "tamanho da foto" ----------
+  //
+  // Cada foto ganha uma página própria com a largura de uma folha A4 (210 mm)
+  // e a altura que a proporção da foto pede: a foto ocupa a página de ponta a
+  // ponta, sem sobra branca (foto em pé = página em pé; deitada = página deitada).
+  // O título da foto fica numa faixa branca acima dela, o cabeçalho do relatório
+  // na primeira página e os próximos passos numa folha A4 no final.
+
+  var FAIXA_TITULO = { topo: 6, base: 4, margemLateral: 15 };
+
+  function orientacao(largura, altura) {
+    return largura > altura ? 'landscape' : 'portrait';
+  }
+
+  function criarDocumentoTamanhoDaFoto(JsPDF, estado) {
+    // Mede tudo antes, porque o tamanho da primeira página é definido ao criar o documento.
+    var medidor = new JsPDF({ unit: 'mm', format: 'a4' });
+    var larguraTexto = PAGINA.largura - 2 * FAIXA_TITULO.margemLateral;
+    var hLinha = alturaLinha(ESTILO.tituloFoto);
+    var alturaCabecalho = cabecalho(medidor, estado, false) || 0;
+
+    var paginas = estado.fotos.map(function (foto, i) {
+      var linhas = quebrarLinhas(medidor, foto.titulo, ESTILO.tituloFoto, larguraTexto);
+      var topo = i === 0 ? alturaCabecalho : 0;
+      var alturaTitulo = linhas.length > 0 ? FAIXA_TITULO.topo + linhas.length * hLinha + FAIXA_TITULO.base : 0;
+      var alturaFoto = PAGINA.largura * foto.altura / foto.largura;
+      return {
+        foto: foto, linhas: linhas, topo: topo, alturaTitulo: alturaTitulo, alturaFoto: alturaFoto,
+        altura: topo + alturaTitulo + alturaFoto
+      };
+    });
+
+    var doc = null;
+    paginas.forEach(function (pg, i) {
+      var formato = [PAGINA.largura, pg.altura];
+      if (i === 0) {
+        doc = new JsPDF({ unit: 'mm', format: formato, orientation: orientacao(PAGINA.largura, pg.altura), compress: true });
+        prepararDocumento(doc, estado);
+        if (alturaCabecalho > 0) { cabecalho(doc, estado, true); }
+      } else {
+        doc.addPage(formato, orientacao(PAGINA.largura, pg.altura));
+      }
+      if (pg.linhas.length > 0) {
+        escreverCentralizado(doc, pg.linhas, ESTILO.tituloFoto, CENTRO_X, pg.topo + FAIXA_TITULO.topo);
+      }
+      doc.addImage(imagemDaFoto(pg.foto, estado.qualidade), 'JPEG',
+        0, pg.topo + pg.alturaTitulo, PAGINA.largura, pg.alturaFoto, pg.foto.id);
+    });
+
+    desenharProximosPassos(doc, estado.tituloProximos, estado.proximosPassos);
+    return doc;
+  }
+
   // ---------- Documento ----------
 
-  /** Monta o PDF completo e devolve o objeto jsPDF. */
-  function criarDocumento(estado) {
-    var JsPDF = window.jspdf && window.jspdf.jsPDF;
-    if (!JsPDF) {
-      throw new Error('a biblioteca jsPDF não carregou (arquivo vendor/jspdf.umd.min.js).');
-    }
-
-    var doc = new JsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
+  function prepararDocumento(doc, estado) {
     doc.setProperties({
       title: textoSeguro(estado.titulo).trim() || 'Relatório',
       subject: textoSeguro(estado.subtitulo).trim(),
@@ -285,20 +353,34 @@
     });
     doc.setTextColor(0, 0, 0);
     doc.setFillColor(0, 0, 0);
+  }
+
+  /** Monta o PDF completo e devolve o objeto jsPDF. */
+  function criarDocumento(estado) {
+    var JsPDF = window.jspdf && window.jspdf.jsPDF;
+    if (!JsPDF) {
+      throw new Error('a biblioteca jsPDF não carregou (arquivo vendor/jspdf.umd.min.js).');
+    }
+    if (estado.fotosPorPagina === 'foto') {
+      return criarDocumentoTamanhoDaFoto(JsPDF, estado);
+    }
+
+    var doc = new JsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait', compress: true });
+    prepararDocumento(doc, estado);
 
     var porPagina = [1, 2, 4].indexOf(estado.fotosPorPagina) !== -1 ? estado.fotosPorPagina : 1;
     var topo = desenharCabecalho(doc, estado);
     if (PAGINA.altura - MARGEM.base - topo < ALTURA_MIN_FOTOS_PAG1) {
-      doc.addPage();
+      doc.addPage('a4', 'portrait');
       topo = MARGEM.topo;
     }
 
     for (var i = 0; i < estado.fotos.length; i += porPagina) {
       if (i > 0) {
-        doc.addPage();
+        doc.addPage('a4', 'portrait');
         topo = MARGEM.topo;
       }
-      desenharFotos(doc, estado.fotos.slice(i, i + porPagina), porPagina, topo);
+      desenharFotos(doc, estado.fotos.slice(i, i + porPagina), porPagina, topo, estado.qualidade);
     }
 
     desenharProximosPassos(doc, estado.tituloProximos, estado.proximosPassos);
@@ -308,7 +390,7 @@
   // ---------- Nome do arquivo ----------
 
   function semAcentos(texto) {
-    return texto.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
   function hojeIso() {

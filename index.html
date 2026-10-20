@@ -83,8 +83,8 @@
     <!-- 3. Layout do PDF -->
     <section class="cartao" id="secao-layout">
       <h2><span class="numero">3</span> Layout do PDF</h2>
-      <p class="dica">Quantas fotos por página?</p>
-      <div class="opcoes-layout" role="radiogroup" aria-label="Fotos por página">
+      <p class="dica">Como as fotos ficam no PDF?</p>
+      <div class="opcoes-layout" role="radiogroup" aria-label="Layout das fotos no PDF">
         <label class="opcao">
           <input type="radio" name="fotos-por-pagina" value="1" checked>
           <span class="opcao-visual">
@@ -107,6 +107,32 @@
             <span class="miniatura-layout quatro"><i></i><i></i><i></i><i></i></span>
             <strong>4 fotos</strong>
             <small>Grade 2 × 2</small>
+          </span>
+        </label>
+        <label class="opcao">
+          <input type="radio" name="fotos-por-pagina" value="foto">
+          <span class="opcao-visual">
+            <span class="miniatura-layout foto"><i></i></span>
+            <strong>Tamanho da foto</strong>
+            <small>Uma página no formato de cada foto</small>
+          </span>
+        </label>
+      </div>
+
+      <p class="dica dica-qualidade">Qualidade das fotos no PDF</p>
+      <div class="opcoes-qualidade" role="radiogroup" aria-label="Qualidade das fotos no PDF">
+        <label class="opcao">
+          <input type="radio" name="qualidade" value="normal" checked>
+          <span class="opcao-visual">
+            <strong>Normal</strong>
+            <small>Arquivo menor, ideal para WhatsApp e e-mail</small>
+          </span>
+        </label>
+        <label class="opcao">
+          <input type="radio" name="qualidade" value="alta">
+          <span class="opcao-visual">
+            <strong>Alta</strong>
+            <small>Melhor para imprimir; arquivo maior</small>
           </span>
         </label>
       </div>

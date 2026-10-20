@@ -11,7 +11,8 @@
   var EXTENSOES_ACEITAS = ['jpg', 'jpeg', 'png', 'webp'];
 
   // Lado maior (px) e qualidade JPEG de cada tipo de saída.
-  var FOTO = { ladoMax: 1600, qualidade: 0.8 };
+  var FOTO = { ladoMax: 1600, qualidade: 0.8 };        // qualidade "Normal" no PDF
+  var FOTO_ALTA = { ladoMax: 2400, qualidade: 0.9 };   // qualidade "Alta" no PDF (para impressão)
   var MINIATURA = { ladoMax: 160, qualidade: 0.7 };
   var LOGO = { ladoMax: 800, qualidade: 0.9 };
 
@@ -115,16 +116,22 @@
     return { dataUrl: dataUrl, largura: largura, altura: altura };
   }
 
-  /** Foto: JPEG de até 1600 px + miniatura de 160 px para a lista. */
+  /**
+   * Foto: duas versões para o PDF (Normal, até 1600 px, e Alta, até 2400 px),
+   * preparadas no envio para que a qualidade possa ser trocada a qualquer
+   * momento, + miniatura de 160 px para a lista.
+   */
   function processarFoto(arquivo) {
     return abrirImagem(arquivo).then(function (imagem) {
       try {
-        var grande = redimensionar(imagem, FOTO.ladoMax, 'image/jpeg', FOTO.qualidade);
+        var normal = redimensionar(imagem, FOTO.ladoMax, 'image/jpeg', FOTO.qualidade);
+        var alta = redimensionar(imagem, FOTO_ALTA.ladoMax, 'image/jpeg', FOTO_ALTA.qualidade);
         var pequena = redimensionar(imagem, MINIATURA.ladoMax, 'image/jpeg', MINIATURA.qualidade);
         return {
-          dataUrl: grande.dataUrl,
-          largura: grande.largura,
-          altura: grande.altura,
+          dataUrl: normal.dataUrl,
+          dataUrlAlta: alta.dataUrl,
+          largura: normal.largura,
+          altura: normal.altura,
           miniatura: pequena.dataUrl
         };
       } finally {
