@@ -366,10 +366,14 @@ button {
 
 /* ---------- Telas estreitas ---------- */
 @media (max-width: 640px) {
-  .topo .container { padding: 0 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
-  .topo::before { width: 60px; }
-  .topo::after { right: 48px; width: 20px; }
-  .logo-topo img { width: 120px; }
+  .topo { padding: 12px 0 12px; }
+  .topo .container { padding: 0 60px 0 16px; flex-direction: row; align-items: center; gap: 14px; }
+  .titulo-topo { padding-left: 12px; border-left-width: 3px; }
+  .titulo-topo h1 { font-size: 0.85rem; letter-spacing: 0.12em; }
+  .titulo-topo p { display: none; }
+  .topo::before { width: 52px; }
+  .topo::after { right: 40px; width: 16px; }
+  .logo-topo img { width: 110px; }
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
   .item-foto { flex-wrap: wrap; }
@@ -382,7 +386,12 @@ button {
   .acoes { flex-direction: column-reverse; }
   .acoes .botao { width: 100%; }
   .rodape-lema span { letter-spacing: 0.2em; }
-  .rodape-creditos { flex-direction: column; }
+  .rodape { padding: 18px 0 14px; }
+  .rodape-lema { gap: 12px; }
+  .rodape-lema span { font-size: 0.62rem; }
+  .rodape-privacidade { margin: 14px 0 12px; font-size: 0.74rem; line-height: 1.45; }
+  .rodape-creditos { flex-direction: column; align-items: center; text-align: center; gap: 6px; font-size: 0.7rem; }
+  .rodape-creditos a { overflow-wrap: anywhere; }
   body::after { width: 420px; height: 420px; right: -150px; bottom: -150px; }
 }
 
