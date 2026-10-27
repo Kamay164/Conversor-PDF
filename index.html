@@ -11,6 +11,7 @@
 <body>
   <header class="topo">
     <div class="container">
+      <div class="logo-topo"><img id="logo-img" alt="Tecno Construções"></div>
       <h1>Relatório de Serviços em PDF</h1>
       <p>Envie as fotos, escreva os títulos e gere o relatório.</p>
     </div>
@@ -21,20 +22,6 @@
     <!-- 1. Cabeçalho do relatório -->
     <section class="cartao" id="secao-cabecalho">
       <h2><span class="numero">1</span> Cabeçalho do relatório</h2>
-
-      <div class="logo-bloco">
-        <div class="logo-previa">
-          <img id="logo-img" alt="Logo do relatório" hidden>
-          <span id="logo-vazio" class="logo-vazio">Sem logo</span>
-        </div>
-        <div class="logo-acoes">
-          <p class="dica">Opcional: o logo aparece no topo da primeira página.</p>
-          <button type="button" id="botao-trocar-logo" class="botao botao-secundario">Adicionar logo</button>
-          <input type="file" id="entrada-logo" accept="image/jpeg,image/png,image/webp" hidden>
-          <button type="button" id="botao-remover-logo" class="botao botao-texto" disabled>Remover logo</button>
-        </div>
-      </div>
-      <div id="mensagens-cabecalho" class="mensagens" role="status" aria-live="polite"></div>
 
       <div class="campo">
         <label for="titulo">Título</label>
@@ -164,6 +151,7 @@
   </main>
 
   <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="js/logo.js"></script>
   <script src="js/imagens.js"></script>
   <script src="js/pdf.js"></script>
   <script src="js/app.js"></script>

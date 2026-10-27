@@ -19,6 +19,12 @@
 
 ---
 
+### Regra adicional (fase 2 — identidade visual)
+- **Antes de qualquer alteração, peça permissão ao usuário** e informe o modelo e o nível de esforço recomendados para a etapa.
+- Trabalhe nas etapas 6 a 11 abaixo, uma por vez, sempre com autorização explícita.
+
+---
+
 ## Objetivo
 
 Site **muito simples, que roda localmente** (abrindo o `index.html` com duplo clique), onde o usuário:
@@ -136,6 +142,43 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 - `README.md` em português: como abrir, como criar atalho na área de trabalho, passo a passo de uso, limitações (ex.: HEIC).
 - **Verificação:** o usuário segue o README do zero e consegue gerar um relatório; "Critérios de conclusão" todos atendidos.
 
+## Fase 2 — Identidade visual da Tecno (etapas 6 a 11)
+
+Referências enviadas pelo usuário (26/10/2026): kit de identidade visual da Tecno Construções (papel timbrado, capa escura de relatório, relatório de obra, cartões, assinatura de e-mail) e o logo em PNG com fundo preto.
+
+### Decisões da fase 2
+- **Relatório PDF:** seguir **exatamente** o 3º template ("Relatório de obra"): cabeçalho com logo à esquerda, linha laranja vertical e "RELATÓRIO DE OBRA" à direita; seções numeradas em laranja; tabela de informações gerais; listas com marcador laranja; rodapé com faixa grafite "CONSTRUINDO O AMANHÃ" + linha laranja.
+- **Site:** versão **clara** inspirada no 2º template (capa escura), sem preto: topo com degradê suave (branco → cinza quente), logo à esquerda, "RELATÓRIO DE OBRA" com barra laranja vertical, "C" laranja em contorno decorativo, cartões brancos e rodapé grafite "CONSTRUINDO O AMANHÃ".
+- **Paleta:** Laranja Tecno `#FF6A00` (números, linhas, marcadores, botão principal); Grafite `#1F1F1F` (textos, faixa do rodapé — no lugar do preto); Cinza quente `#F3F2F0` (fundo do site); Branco `#FFFFFF` (cartões e páginas do PDF); apoio `#6B6B6B` (texto secundário) e `#E4E2DE` (linhas). Laranja não é usado em texto pequeno corrido (contraste).
+- **Fonte:** Montserrat (Google Fonts, licença OFL), embutida localmente no site e no PDF (funciona offline). Custo: ≈ +0,5 MB por PDF.
+- **Logo:** fixo (sai a opção de enviar logo). Usar `assets/logo-tecno-fundo-claro.png` (gerado por edição automática do PNG com fundo preto; versão `assets/logo-tecno-fundo-escuro.png` para fundos escuros).
+  - ⚠️ **Provisório:** o usuário não gostou totalmente dessa versão; **no final ele vai enviar o logo oficial (PDF/vetor)** para substituir. Deixar a troca simples (um único arquivo/constante).
+- **Formulário (campos do template):** título fixo "RELATÓRIO DE OBRA" (sai o campo Subtítulo e o campo Título livre); novos campos **Obra, Endereço, Responsável**; Período (datas já existentes); **Atividades realizadas** (lista, um item por linha); Próximos passos (já existe); **Observações** (texto livre). Fotos, os 4 layouts e as 2 qualidades continuam.
+- **Ordem das seções no PDF:** 1. Informações gerais (tabela Obra / Endereço / Período / Responsável) · 2. Atividades realizadas · 3. Registro fotográfico · 4. Próximos passos · 5. Observações. Seção vazia é omitida e a numeração se ajusta.
+
+### Etapa 6 — Plano da fase 2
+- Registrar neste arquivo as decisões acima. **Verificação:** usuário confere o plano.
+
+### Etapa 7 — Logo fixo
+- Remover "Adicionar/Trocar/Remover logo" do formulário; logo fixo da Tecno no site e no PDF, a partir de um único ponto do código (troca fácil pelo logo oficial).
+- Embutir o logo para funcionar também via `file://` (ex.: base64 em `js/logo.js`). Apagar `js/logo-padrao.js` e `assets/logo-tecno.jpg` antigos só com autorização.
+- **Verificação:** logo aparece no site e no PDF; não há mais botões de logo.
+
+### Etapa 8 — Visual do site
+- Aplicar paleta, Montserrat (arquivos locais em `vendor/fonts/`), topo claro com degradê, logo à esquerda, "RELATÓRIO DE OBRA" com barra laranja, "C" decorativo, cartões brancos, rodapé grafite. Responsivo (celular).
+- **Verificação:** Chrome/Edge e celular; sem rolagem horizontal; sem erros no console.
+
+### Etapa 9 — Campos novos do formulário
+- Obra, Endereço, Responsável, Atividades realizadas, Observações; remover Título/Subtítulo; ajustar estado e validação (aviso se Obra vazia, sem bloquear). Nome do arquivo passa a usar a Obra.
+- **Verificação:** campos aparecem e chegam ao estado.
+
+### Etapa 10 — Novo layout do PDF
+- Implementar o 3º template em todas as páginas (cabeçalho e rodapé), com Montserrat embutida no jsPDF, seções numeradas, tabela e listas; manter os 4 layouts de foto (incluindo "Tamanho da foto") e as 2 qualidades.
+- **Verificação:** comparar com o template; acentos; quebras de página; tamanho do arquivo.
+
+### Etapa 11 — Testes e documentação
+- Testes completos, README e este arquivo atualizados; perguntar se a `demo/` deve ser refeita no visual novo.
+
 ## Status das etapas
 
 | Etapa | Status | Observações |
@@ -146,6 +189,12 @@ Cada etapa termina com o checklist de verificação aprovado pelo usuário.
 | 3 — Geração do PDF | ✅ Concluída | js/pdf.js; 3 layouts, lista longa e casos difíceis |
 | 4 — Uso real e ajustes | ✅ Concluída | Logo opcional sem padrão; "Grande" no layout de 1 foto; próximos passos em branco; título da seção só como sugestão |
 | 5 — Revisão e README | ✅ Concluída | Revisão do código, README.md (uso online), .gitignore com referencia/ e demo/. Extras: qualidade Normal/Alta e layout "Tamanho da foto" |
+| 6 — Plano da fase 2 | 🔄 Aguardando verificação | Decisões de identidade visual registradas |
+| 7 — Logo fixo | 🔄 Aguardando verificação | Logo embutido em `js/logo.js` (provisório); upload removido; arquivos antigos ainda não apagados |
+| 8 — Visual do site | ⬜ Pendente | |
+| 9 — Campos novos | ⬜ Pendente | |
+| 10 — Novo layout do PDF | ⬜ Pendente | |
+| 11 — Testes e documentação | ⬜ Pendente | |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)
 
@@ -202,6 +251,8 @@ Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferênci
 
 ## Pendências do usuário
 
+- **Enviar o logo oficial (PDF/vetor) no final da fase 2** para substituir o logo provisório.
+
 - Decidir se `js/logo-padrao.js` e `assets/logo-tecno.jpg` (sem uso desde a Etapa 4) podem ser apagados.
 - Tirar `referencia/` e `demo/` do repositório no GitHub (`git rm -r --cached --ignore-unmatch referencia demo`, commit e push) e, se quiser, limpar o histórico.
 
@@ -216,5 +267,11 @@ Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferênci
 | 3 — Geração do PDF | Opus 5.5 | medium (high se travar) |
 | 4 — Ajustes | Sonnet 5.5 | medium |
 | 5 — Revisão | Opus 5.5 (revisão) / Haiku 5.5 (README) | medium / low |
+| 6 — Plano da fase 2 | Sonnet 5.5 | low |
+| 7 — Logo fixo | Sonnet 5.5 | medium |
+| 8 — Visual do site | Sonnet 5.5 | medium (Opus se complicar) |
+| 9 — Campos novos | Sonnet 5.5 | medium |
+| 10 — Novo layout do PDF | Opus 5.5 | medium (high se travar) |
+| 11 — Testes e documentação | Sonnet 5.5 | low |
 
 Comandos: `/model sonnet`, `/model opus`, `/model haiku`, `/effort medium`. Use `/clear` entre etapas — este arquivo mantém o contexto.

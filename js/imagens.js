@@ -14,7 +14,6 @@
   var FOTO = { ladoMax: 1600, qualidade: 0.8 };        // qualidade "Normal" no PDF
   var FOTO_ALTA = { ladoMax: 2400, qualidade: 0.9 };   // qualidade "Alta" no PDF (para impressão)
   var MINIATURA = { ladoMax: 160, qualidade: 0.7 };
-  var LOGO = { ladoMax: 800, qualidade: 0.9 };
 
   function extensao(nome) {
     var m = /\.([^.]+)$/.exec(nome || '');
@@ -140,22 +139,8 @@
     });
   }
 
-  /** Logo: mantém PNG (com transparência); os demais formatos viram JPEG. */
-  function processarLogo(arquivo) {
-    return abrirImagem(arquivo).then(function (imagem) {
-      try {
-        var tipoSaida = (arquivo.type === 'image/png' || extensao(arquivo.name) === 'png')
-          ? 'image/png' : 'image/jpeg';
-        return redimensionar(imagem, LOGO.ladoMax, tipoSaida, LOGO.qualidade);
-      } finally {
-        imagem.fechar();
-      }
-    });
-  }
-
   window.Imagens = {
     validarArquivo: validarArquivo,
-    processarFoto: processarFoto,
-    processarLogo: processarLogo
+    processarFoto: processarFoto
   };
 })();

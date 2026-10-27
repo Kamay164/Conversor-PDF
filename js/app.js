@@ -9,7 +9,7 @@
 
   // ---------- Estado único da aplicação ----------
   var estado = {
-    logo: null,              // { dataUrl, largura, altura } – opcional; null = relatório sem logo
+    logo: window.LOGO_TECNO, // logo fixo da Tecno ({ dataUrl, largura, altura }), definido em js/logo.js
     titulo: '',
     subtitulo: '',
     dataInicial: '',
@@ -28,11 +28,6 @@
 
   var el = {
     logoImg: porId('logo-img'),
-    logoVazio: porId('logo-vazio'),
-    botaoTrocarLogo: porId('botao-trocar-logo'),
-    botaoRemoverLogo: porId('botao-remover-logo'),
-    entradaLogo: porId('entrada-logo'),
-    mensagensCabecalho: porId('mensagens-cabecalho'),
     titulo: porId('titulo'),
     subtitulo: porId('subtitulo'),
     dataInicial: porId('data-inicial'),
@@ -78,36 +73,9 @@
   }
 
   // ---------- Logo ----------
-  // O logo é opcional: sem logo, a prévia mostra "Sem logo" e o PDF começa pelo título.
-  function atualizarLogo() {
-    var temLogo = !!estado.logo;
-    if (temLogo) {
-      el.logoImg.src = estado.logo.dataUrl;
-    } else {
-      el.logoImg.removeAttribute('src');
-    }
-    el.logoImg.hidden = !temLogo;
-    el.logoVazio.hidden = temLogo;
-    el.botaoTrocarLogo.textContent = temLogo ? 'Trocar logo' : 'Adicionar logo';
-    el.botaoRemoverLogo.disabled = !temLogo;
-  }
-
-  function trocarLogo(arquivo) {
-    limparMensagens(el.mensagensCabecalho);
-    var erro = window.Imagens.validarArquivo(arquivo);
-    if (erro) {
-      mostrarMensagens(el.mensagensCabecalho, [{ tipo: 'erro', texto: erro }]);
-      return;
-    }
-    window.Imagens.processarLogo(arquivo).then(function (logo) {
-      estado.logo = logo;
-      atualizarLogo();
-    }).catch(function () {
-      mostrarMensagens(el.mensagensCabecalho, [{
-        tipo: 'erro',
-        texto: 'Não foi possível abrir "' + arquivo.name + '". O arquivo pode estar corrompido.'
-      }]);
-    });
+  // O logo é fixo (js/logo.js): aparece no topo do site e na primeira página do PDF.
+  function mostrarLogo() {
+    if (estado.logo && el.logoImg) { el.logoImg.src = estado.logo.dataUrl; }
   }
 
   // ---------- Lista de fotos ----------
@@ -396,20 +364,6 @@
     return valor === 'foto' ? 'foto' : parseInt(valor, 10);
   }
 
-  function ligarLogo() {
-    el.botaoTrocarLogo.addEventListener('click', function () { el.entradaLogo.click(); });
-    el.entradaLogo.addEventListener('change', function () {
-      if (el.entradaLogo.files.length > 0) { trocarLogo(el.entradaLogo.files[0]); }
-      el.entradaLogo.value = '';
-    });
-    el.botaoRemoverLogo.addEventListener('click', function () {
-      limparMensagens(el.mensagensCabecalho);
-      estado.logo = null;
-      atualizarLogo();
-      el.botaoTrocarLogo.focus();
-    });
-  }
-
   function ligarFotos() {
     el.entradaFotos.addEventListener('change', function () {
       var arquivos = Array.prototype.slice.call(el.entradaFotos.files);
@@ -467,11 +421,10 @@
 
   // ---------- Início ----------
   ligarCampos();
-  ligarLogo();
   ligarFotos();
   ligarAcoes();
   renderizarFotos();
-  atualizarLogo();
+  mostrarLogo();
 
   // Acesso ao estado para depuração no console (F12) e testes automáticos.
   window.Relatorio = { estado: estado, validar: validar };

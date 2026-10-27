@@ -140,25 +140,15 @@ button {
 }
 .botao-icone:hover { background: var(--cinza-fundo); }
 
-/* ---------- Logo ---------- */
-.logo-bloco {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 14px;
-  margin-bottom: 18px;
-  background: var(--cinza-fundo);
-  border-radius: 8px;
-}
-.logo-previa {
-  flex: 0 0 auto;
-  padding: 8px;
+/* ---------- Logo fixo ---------- */
+.logo-topo {
+  display: inline-block;
+  padding: 8px 14px;
+  margin-bottom: 12px;
   background: var(--branco);
-  border: 1px solid var(--cinza-borda);
   border-radius: 8px;
 }
-.logo-previa img { display: block; width: 200px; max-width: 100%; height: auto; }
-.logo-acoes { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.logo-topo img { display: block; width: 180px; max-width: 100%; height: auto; }
 
 /* ---------- Fotos ---------- */
 .area-envio {
@@ -268,7 +258,6 @@ button {
 @media (max-width: 640px) {
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
-  .logo-bloco { flex-direction: column; align-items: flex-start; }
   .item-foto { flex-wrap: wrap; }
   .item-foto .campo { flex: 1 1 calc(100% - 120px); }
   .item-acoes { margin-left: auto; }
@@ -315,17 +304,3 @@ button {
 button:disabled { cursor: not-allowed; opacity: 0.4; }
 .botao-texto:disabled { text-decoration: none; }
 [hidden] { display: none !important; }
-
-/* ---------- Logo opcional: espaço vazio quando não há logo ---------- */
-.logo-vazio {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  max-width: 100%;
-  height: 74px;
-  color: var(--cinza-texto);
-  font-size: 0.9rem;
-  border: 1px dashed #b8bcc4;
-  border-radius: 6px;
-}
