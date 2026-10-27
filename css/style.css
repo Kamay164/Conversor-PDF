@@ -40,13 +40,52 @@ body {
   padding: 0 16px;
 }
 
+/* ---------- Fundo da página: brilho quente, traço de planta e "C" ---------- */
+body { position: relative; isolation: isolate; }
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+/* brilho laranja bem leve no canto + grade fina tipo papel de projeto que some nas bordas */
+body::before {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(255, 106, 0, 0.10), transparent 70%),
+    linear-gradient(rgba(31, 31, 31, 0.045) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(31, 31, 31, 0.045) 1px, transparent 1px) 0 0 / 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 30%, transparent 100%);
+}
+/* "C" gigante só com contorno, cortado no canto inferior direito */
+body::after {
+  right: -160px;
+  bottom: -180px;
+  width: 640px;
+  height: 640px;
+  opacity: 0.22;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M82 24 A40 40 0 1 0 82 76' fill='none' stroke='%23ff6a00' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* ---------- Topo ---------- */
 .topo {
   position: relative;
   overflow: hidden;
-  padding: 26px 0 24px;
+  padding: 38px 0 36px;
   background: linear-gradient(135deg, var(--branco) 0%, #e9e7e3 100%);
   border-bottom: 1px solid var(--cinza-borda);
+}
+/* linhas diagonais finas (desenho técnico), mais fortes à direita */
+.topo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 106, 0, 0.10) 0 1px, transparent 1px 16px);
+  -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
+  pointer-events: none;
 }
 .topo .container {
   position: relative;
@@ -54,9 +93,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 48px;
 }
-.logo-topo img { display: block; width: 190px; max-width: 100%; height: auto; }
+.logo-topo img { display: block; width: 155px; max-width: 100%; height: auto; }
 .titulo-topo {
   padding-left: 16px;
   border-left: 3px solid var(--laranja);
@@ -282,26 +321,40 @@ button {
 
 /* ---------- Ações finais ---------- */
 .acoes { display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 16px; }
-.rodape-nota { text-align: center; color: var(--cinza-texto); font-size: 0.8rem; }
 
 /* ---------- Rodapé da página ---------- */
 .rodape {
   background: var(--grafite);
   color: var(--branco);
-  padding: 18px 0;
+  padding: 22px 0 18px;
 }
-.rodape .container {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+.rodape-lema { display: flex; align-items: center; gap: 16px; }
 .rodape .linha-laranja { flex: 1; height: 1px; background: var(--laranja); }
-.rodape span {
+.rodape-lema span {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
+.rodape-privacidade {
+  margin: 18px 0 14px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #c9c6c0;
+}
+.rodape-creditos {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.72rem;
+  color: #a8a5a0;
+}
+.rodape-creditos p { margin: 0; }
+.rodape-creditos a { color: var(--branco); text-decoration: none; border-bottom: 1px solid var(--laranja); }
+.rodape-creditos a:hover { color: var(--laranja); }
 
 /* ---------- Telas médias ---------- */
 @media (max-width: 820px) and (min-width: 641px) {
@@ -311,7 +364,7 @@ button {
 /* ---------- Telas estreitas ---------- */
 @media (max-width: 640px) {
   .topo .container { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .logo-topo img { width: 160px; }
+  .logo-topo img { width: 140px; }
   .letra-c { width: 200px; height: 200px; right: -70px; bottom: -90px; opacity: 0.25; }
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
@@ -324,7 +377,9 @@ button {
   .miniatura-layout { margin-bottom: 0; flex: 0 0 auto; }
   .acoes { flex-direction: column-reverse; }
   .acoes .botao { width: 100%; }
-  .rodape span { letter-spacing: 0.2em; }
+  .rodape-lema span { letter-spacing: 0.2em; }
+  .rodape-creditos { flex-direction: column; }
+  body::after { width: 420px; height: 420px; right: -150px; bottom: -150px; }
 }
 
 /* ---------- Mensagens, progresso e estados ---------- */

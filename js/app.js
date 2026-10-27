@@ -425,6 +425,8 @@
   ligarAcoes();
   renderizarFotos();
   mostrarLogo();
+  var anoEl = porId('ano');
+  if (anoEl) { anoEl.textContent = new Date().getFullYear(); }
 
   // Acesso ao estado para depuração no console (F12) e testes automáticos.
   window.Relatorio = { estado: estado, validar: validar };
