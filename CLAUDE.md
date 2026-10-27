@@ -62,7 +62,7 @@ Somente ferramentas **gratuitas**, sem servidor e sem etapa de build:
 | Geração do PDF | **jsPDF** (licença MIT), cópia local em `vendor/` | Gera PDF no navegador com texto e imagens; funciona offline |
 | Tratamento de fotos | Canvas do navegador | Redimensionar e comprimir sem bibliotecas extras |
 | Navegadores-alvo | Google Chrome e Microsoft Edge (Windows) | Navegadores do usuário |
-| Hospedagem | **Vercel** (site estático, via GitHub); talvez domínio próprio no futuro | Decisão do usuário (antes: só local) |
+| Hospedagem | **Cloudflare** (Worker `relatorio-pdf`, site estático via GitHub `Kamay164/Conversor-PDF`); talvez domínio `.com.br` no futuro | Decisão do usuário (Vercel Hobby não permite uso comercial) |
 
 ## Estrutura de pastas
 
@@ -77,7 +77,7 @@ Conversor PDF/
 │   ├── app.js                ← estado da aplicação e eventos da interface
 │   ├── imagens.js            ← leitura, redimensionamento e compressão das fotos
 │   ├── pdf.js                ← montagem do PDF com jsPDF
-│   └── logo-padrao.js        ← SEM USO desde a Etapa 4 (logo padrão removido); apagar só com autorização
+│   └── logo.js               ← logo fixo da Tecno em base64 (ponto único de troca); fontes-pdf.js = Montserrat para o PDF
 ├── vendor/
 │   └── jspdf.umd.min.js      ← cópia local do jsPDF (versão fixa)
 ├── assets/
@@ -179,6 +179,14 @@ Referências enviadas pelo usuário (26/10/2026): kit de identidade visual da Te
 ### Etapa 11 — Testes e documentação
 - Testes completos, README e este arquivo atualizados; perguntar se a `demo/` deve ser refeita no visual novo.
 
+### Fase 3 — Entrega ao cliente (Etapa 12)
+Pedido do usuário em 27/10: revisar tudo para entrega a cliente final, esconder arquivos internos no Cloudflare e incluir o que se espera de um site vendido.
+- **Esconder CLAUDE.md/README/referencia:** no Cloudflare Pages, build command `mkdir -p dist && cp -r index.html 404.html privacidade.html robots.txt manifest.webmanifest _headers _redirects css js vendor icones dist/` + output `dist` (ver README). `.assetsignore` cobre o caso Worker. Pasta nova do site = incluir no comando.
+- **Adicionados:** `noindex` (meta, robots.txt, X-Robots-Tag), favicon/ícones/manifest ("Adicionar à tela inicial"), 404.html, privacidade.html (sem coleta, sem cookies), `_headers` (CSP de scripts/estilos, nosniff, no-referrer, X-Frame-Options, Permissions-Policy), meta description/Open Graph, aviso sem JavaScript, aviso ao fechar a página com fotos carregadas, link "Privacidade" no rodapé.
+- **Decisões do usuário:** logo continua o provisório (cliente não tem arquivo); demo não será refeita; crédito "Desenvolvido por" com e-mail no rodapé.
+- **Testado:** servidor local aplicando `_headers` (sem violações de CSP no site), 60 fotos (≈10 s para processar; PDF em ≈1 s), HEIC/TXT com aviso, textos extremos, páginas 404/privacidade, arquivos internos retornando 404 na pasta `dist`. Não testado: Safari/iPhone, Edge e Firefox reais, Visualizar PDF no leitor do Chrome.
+- **Próximo:** contrato de venda e checklist de entrega (com o usuário).
+
 ## Status das etapas
 
 | Etapa | Status | Observações |
@@ -194,7 +202,8 @@ Referências enviadas pelo usuário (26/10/2026): kit de identidade visual da Te
 | 8 — Visual do site | 🔄 Aguardando verificação | Montserrat local em `vendor/fonts/` (OFL), paleta Tecno, topo em degradê com logo + "RELATÓRIO DE OBRA" + C decorativo, rodapé grafite. rodapé com direitos, privacidade e crédito "Desenvolvido por Vinicius Kamay" (e-mail em `index.html`, linha do crédito); fundo com "C", brilho e grade; linhas diagonais no topo. Logo-padrao.js e logo-tecno.jpg: apagar à mão |
 | 9 — Campos novos | 🔄 Aguardando verificação | Obra, Endereço, Responsável, Atividades e Observações no formulário e no estado; Título/Subtítulo removidos; aviso (sem bloquear) se Obra vazia; arquivo usa a Obra. PDF ainda no layout antigo (título fixo + Obra/Endereço/Período/Responsável); Atividades e Observações só entram no PDF na Etapa 10 |
 | 10 — Novo layout do PDF | 🔄 Aguardando verificação | Modelo "Relatório de obra": topo com logo + "RELATÓRIO DE OBRA" em toda página A4, seções numeradas (vazias somem), tabela de informações gerais, marcadores laranja, rodapé grafite com "PÁG. X DE Y" e lema, assinatura "TECNO Construções". Montserrat embutida via `js/fontes-pdf.js` (≈ +100 KB por PDF). Testado: 4 layouts, 2 qualidades, seções vazias, 30 itens, 20 fotos (≈5,0 MB normal / 5,8 MB alta) |
-| 11 — Testes e documentação | ⬜ Pendente | |
+| 12 — Entrega ao cliente | 🔄 Aguardando verificação | Ver "Fase 3" acima |
+| 11 — Testes e documentação | 🔄 Aguardando verificação | README reescrito (campos novos, trocar logo, Cloudflare, licenças); .gitignore atualizado; teste final desktop e celular sem erros no console; logo-padrao.js removido. Pendente: decidir sobre refazer a demo; criar `.assetsignore`; trocar pelo logo oficial |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)
 
@@ -225,7 +234,7 @@ Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usu�
 
 Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferência do usuário no site publicado.
 
-- [x] Funciona online (Vercel) e também com duplo clique em `index.html`, sem internet.
+- [x] Funciona online (Cloudflare) e também com duplo clique em `index.html`, sem internet.
 - [x] Logo opcional: começa sem logo; dá para adicionar, trocar e remover.
 - [x] Título, subtítulo e data/período aparecem na página 1, no estilo do exemplo.
 - [x] Várias fotos, cada uma com título próprio (opcional), na ordem definida pelo usuário.
@@ -242,7 +251,7 @@ Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferênci
 
 - Organização das fotos: um título por foto (opcional), mais o cabeçalho com logo, título e subtítulo na página 1.
 - Identidade: logo opcional, sem logo padrão (decidido na Etapa 4; antes era o logo da Tecno por padrão).
-- Execução: online, hospedado na Vercel (o site continua funcionando também via `file://` para testes). `referencia/` nunca vai para o GitHub nem para o site.
+- Execução: online, hospedado na Cloudflare (o site continua funcionando também via `file://` para testes). `referencia/` nunca vai para o GitHub nem para o site.
 - Extras incluídos: data/período e escolha de fotos por página. Extras não incluídos: rascunho salvo, página de assinatura.
 - Layout do PDF (Etapa 3): margens de 20 mm (topo/base) e 25 mm (laterais); logo até 70×28 mm; Times 13 pt (título) e 12 pt (demais); foto de 1 por página ≈ 15×20 cm, como no exemplo; título da foto limitado a 35% da altura da célula (cortado com "...").
 - Qualidade das fotos (pedido após a Etapa 5): cada foto é preparada no envio em duas versões, Normal (1600 px, JPEG 80%) e Alta (2400 px, JPEG 90%); o usuário escolhe no layout e pode trocar a qualquer momento.
@@ -253,7 +262,7 @@ Conferidos em testes automáticos no Chromium (Etapa 5). Falta só a conferênci
 
 - **Enviar o logo oficial (PDF/vetor) no final da fase 2** para substituir o logo provisório.
 
-- Decidir se `js/logo-padrao.js` e `assets/logo-tecno.jpg` (sem uso desde a Etapa 4) podem ser apagados.
+- Apagar `assets/logo-tecno.jpg` à mão (sem uso; `js/logo-padrao.js` já foi removido).
 - Tirar `referencia/` e `demo/` do repositório no GitHub (`git rm -r --cached --ignore-unmatch referencia demo`, commit e push) e, se quiser, limpar o histórico.
 
 ## Modelo recomendado por etapa (referência para o usuário)

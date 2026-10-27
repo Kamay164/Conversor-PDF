@@ -1,0 +1,10 @@
+# Só para publicação como Cloudflare Worker: arquivos que NÃO devem ficar públicos.
+# (No Cloudflare Pages use o comando de build descrito no README, que já copia só o site.)
+CLAUDE.md
+README.md
+.gitignore
+.assetsignore
+referencia
+demo
+assets
+dist

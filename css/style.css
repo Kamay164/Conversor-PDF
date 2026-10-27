@@ -428,3 +428,12 @@ button {
 button:disabled { cursor: not-allowed; opacity: 0.4; }
 .botao-texto:disabled { text-decoration: none; }
 [hidden] { display: none !important; }
+
+/* ---------- Páginas simples (404, privacidade) e aviso sem JavaScript ---------- */
+.pagina-texto { max-width: 720px; }
+.pagina-texto p { margin: 0 0 14px; }
+.logo-topo a { display: block; }
+.aviso-noscript { margin: 0; padding: 12px 16px; text-align: center; background: #fff4d6; color: #6b4a00; font-weight: 600; }
+.rodape-creditos a[href="privacidade.html"] { border-bottom-color: transparent; color: #a8a5a0; text-decoration: underline; }
+.pagina-texto a:not(.botao) { color: var(--grafite); text-decoration-color: var(--laranja); text-underline-offset: 3px; }
+.pagina-texto .botao { text-decoration: none; }

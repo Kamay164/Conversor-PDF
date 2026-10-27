@@ -1,0 +1,11 @@
+# Esconde arquivos internos do projeto (Cloudflare): mostram a página 404 em vez do conteúdo.
+/CLAUDE.md /404.html 200
+/README.md /404.html 200
+/.assetsignore /404.html 200
+/.gitignore /404.html 200
+/referencia /404.html 200
+/referencia/* /404.html 200
+/demo /404.html 200
+/demo/* /404.html 200
+/assets /404.html 200
+/assets/* /404.html 200

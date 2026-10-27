@@ -1,3 +1,4 @@
-# Arquivos que não vão para o GitHub nem para o site publicado na Vercel
+# Arquivos que não vão para o GitHub nem para o site publicado
 referencia/
 demo/
+dist/

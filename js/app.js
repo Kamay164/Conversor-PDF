@@ -438,6 +438,11 @@
   var anoEl = porId('ano');
   if (anoEl) { anoEl.textContent = new Date().getFullYear(); }
 
+  // Avisa antes de fechar ou recarregar a página com fotos já carregadas (nada é salvo).
+  window.addEventListener('beforeunload', function (e) {
+    if (estado.fotos.length > 0) { e.preventDefault(); e.returnValue = ''; }
+  });
+
   // Acesso ao estado para depuração no console (F12) e testes automáticos.
   window.Relatorio = { estado: estado, validar: validar };
 })();
