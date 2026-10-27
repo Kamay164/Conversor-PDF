@@ -191,9 +191,9 @@ Referências enviadas pelo usuário (26/10/2026): kit de identidade visual da Te
 | 5 — Revisão e README | ✅ Concluída | Revisão do código, README.md (uso online), .gitignore com referencia/ e demo/. Extras: qualidade Normal/Alta e layout "Tamanho da foto" |
 | 6 — Plano da fase 2 | 🔄 Aguardando verificação | Decisões de identidade visual registradas |
 | 7 — Logo fixo | 🔄 Aguardando verificação | Logo embutido em `js/logo.js` (provisório); upload removido; arquivos antigos ainda não apagados |
-| 8 — Visual do site | 🔄 Aguardando verificação | Montserrat local em `vendor/fonts/` (OFL), paleta Tecno, topo em degradê com logo + "RELATÓRIO DE OBRA" + C decorativo, rodapé grafite. Logo-padrao.js e logo-tecno.jpg: apagar à mão |
-| 9 — Campos novos | ⬜ Pendente | |
-| 10 — Novo layout do PDF | ⬜ Pendente | |
+| 8 — Visual do site | 🔄 Aguardando verificação | Montserrat local em `vendor/fonts/` (OFL), paleta Tecno, topo em degradê com logo + "RELATÓRIO DE OBRA" + C decorativo, rodapé grafite. rodapé com direitos, privacidade e crédito "Desenvolvido por Vinicius Kamay" (e-mail em `index.html`, linha do crédito); fundo com "C", brilho e grade; linhas diagonais no topo. Logo-padrao.js e logo-tecno.jpg: apagar à mão |
+| 9 — Campos novos | 🔄 Aguardando verificação | Obra, Endereço, Responsável, Atividades e Observações no formulário e no estado; Título/Subtítulo removidos; aviso (sem bloquear) se Obra vazia; arquivo usa a Obra. PDF ainda no layout antigo (título fixo + Obra/Endereço/Período/Responsável); Atividades e Observações só entram no PDF na Etapa 10 |
+| 10 — Novo layout do PDF | 🔄 Aguardando verificação | Modelo "Relatório de obra": topo com logo + "RELATÓRIO DE OBRA" em toda página A4, seções numeradas (vazias somem), tabela de informações gerais, marcadores laranja, rodapé grafite com "PÁG. X DE Y" e lema, assinatura "TECNO Construções". Montserrat embutida via `js/fontes-pdf.js` (≈ +100 KB por PDF). Testado: 4 layouts, 2 qualidades, seções vazias, 30 itens, 20 fotos (≈5,0 MB normal / 5,8 MB alta) |
 | 11 — Testes e documentação | ⬜ Pendente | |
 
 Legenda: ⬜ Pendente · 🔄 Em andamento · ✅ Concluída (aprovada pelo usuário)

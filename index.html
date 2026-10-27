@@ -21,18 +21,18 @@
 
   <main class="container">
 
-    <!-- 1. Cabeçalho do relatório -->
-    <section class="cartao" id="secao-cabecalho">
-      <h2><span class="numero">1</span> Cabeçalho do relatório</h2>
+    <!-- 1. Informações gerais -->
+    <section class="cartao" id="secao-gerais">
+      <h2><span class="numero">1</span> Informações gerais</h2>
 
       <div class="campo">
-        <label for="titulo">Título</label>
-        <input type="text" id="titulo" placeholder="Ex.: RELATÓRIO DE SERVIÇOS EXECUTADOS">
+        <label for="obra">Obra</label>
+        <input type="text" id="obra" placeholder="Ex.: Residência Unifamiliar" autocomplete="off">
       </div>
 
       <div class="campo">
-        <label for="subtitulo">Subtítulo</label>
-        <input type="text" id="subtitulo" placeholder="Ex.: INSTALAÇÃO DE PISO">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" placeholder="Ex.: Rua das Acácias, 123 – São Paulo/SP" autocomplete="off">
       </div>
 
       <div class="linha">
@@ -45,11 +45,25 @@
           <input type="date" id="data-final">
         </div>
       </div>
+
+      <div class="campo">
+        <label for="responsavel">Responsável</label>
+        <input type="text" id="responsavel" placeholder="Ex.: Eng. Civil – Isaac Marques" autocomplete="off">
+      </div>
+    </section>
+
+    <!-- 2. Atividades realizadas -->
+    <section class="cartao" id="secao-atividades">
+      <h2><span class="numero">2</span> Atividades realizadas</h2>
+      <div class="campo">
+        <label for="atividades">Itens <span class="opcional">(um por linha)</span></label>
+        <textarea id="atividades" rows="6" placeholder="Ex.: Execução de alvenaria do pavimento térreo"></textarea>
+      </div>
     </section>
 
     <!-- 2. Fotos -->
     <section class="cartao" id="secao-fotos">
-      <h2><span class="numero">2</span> Fotos</h2>
+      <h2><span class="numero">3</span> Fotos</h2>
 
       <label class="area-envio" id="area-envio" for="entrada-fotos" tabindex="0">
         <strong>Arraste as fotos aqui</strong>
@@ -71,7 +85,7 @@
 
     <!-- 3. Layout do PDF -->
     <section class="cartao" id="secao-layout">
-      <h2><span class="numero">3</span> Layout do PDF</h2>
+      <h2><span class="numero">4</span> Layout do PDF</h2>
       <p class="dica">Como as fotos ficam no PDF?</p>
       <div class="opcoes-layout" role="radiogroup" aria-label="Layout das fotos no PDF">
         <label class="opcao">
@@ -129,7 +143,7 @@
 
     <!-- 4. Próximos passos -->
     <section class="cartao" id="secao-proximos">
-      <h2><span class="numero">4</span> Próximos passos</h2>
+      <h2><span class="numero">5</span> Próximos passos</h2>
 
       <div class="campo">
         <label for="titulo-proximos">Título da seção <span class="opcional">(opcional)</span></label>
@@ -139,6 +153,15 @@
       <div class="campo">
         <label for="proximos-passos">Itens <span class="opcional">(um por linha)</span></label>
         <textarea id="proximos-passos" rows="7"></textarea>
+      </div>
+    </section>
+
+    <!-- 6. Observações -->
+    <section class="cartao" id="secao-observacoes">
+      <h2><span class="numero">6</span> Observações</h2>
+      <div class="campo">
+        <label for="observacoes">Texto <span class="opcional">(opcional)</span></label>
+        <textarea id="observacoes" rows="4" placeholder="Ex.: A obra segue conforme o cronograma estabelecido, sem ocorrências relevantes."></textarea>
       </div>
     </section>
 
@@ -170,6 +193,7 @@
   <script src="vendor/jspdf.umd.min.js"></script>
   <script src="js/logo.js"></script>
   <script src="js/imagens.js"></script>
+  <script src="js/fontes-pdf.js"></script>
   <script src="js/pdf.js"></script>
   <script src="js/app.js"></script>
 </body>

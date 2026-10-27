@@ -366,14 +366,12 @@ button {
 
 /* ---------- Telas estreitas ---------- */
 @media (max-width: 640px) {
-  .topo { padding: 12px 0 12px; }
-  .topo .container { padding: 0 60px 0 16px; flex-direction: row; align-items: center; gap: 14px; }
-  .titulo-topo { padding-left: 12px; border-left-width: 3px; }
-  .titulo-topo h1 { font-size: 0.85rem; letter-spacing: 0.12em; }
-  .titulo-topo p { display: none; }
+  .topo { padding: 16px 0; }
+  .topo .container { padding: 0 16px; flex-direction: row; align-items: center; }
+  .titulo-topo { display: none; }
   .topo::before { width: 52px; }
   .topo::after { right: 40px; width: 16px; }
-  .logo-topo img { width: 110px; }
+  .logo-topo img { width: 140px; }
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
   .item-foto { flex-wrap: wrap; }

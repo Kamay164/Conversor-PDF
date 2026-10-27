@@ -10,8 +10,11 @@
   // ---------- Estado único da aplicação ----------
   var estado = {
     logo: window.LOGO_TECNO, // logo fixo da Tecno ({ dataUrl, largura, altura }), definido em js/logo.js
-    titulo: '',
-    subtitulo: '',
+    obra: '',
+    endereco: '',
+    responsavel: '',
+    atividades: '',          // um item por linha
+    observacoes: '',
     dataInicial: '',
     dataFinal: '',
     fotos: [],               // { id, nome, dataUrl, miniatura, largura, altura, titulo }
@@ -28,8 +31,11 @@
 
   var el = {
     logoImg: porId('logo-img'),
-    titulo: porId('titulo'),
-    subtitulo: porId('subtitulo'),
+    obra: porId('obra'),
+    endereco: porId('endereco'),
+    responsavel: porId('responsavel'),
+    atividades: porId('atividades'),
+    observacoes: porId('observacoes'),
     dataInicial: porId('data-inicial'),
     dataFinal: porId('data-final'),
     areaEnvio: porId('area-envio'),
@@ -267,8 +273,8 @@
     if (estado.fotos.length === 0) {
       erros.push('Adicione pelo menos uma foto antes de gerar o PDF.');
     }
-    if (estado.titulo.trim() === '') {
-      avisos.push('O título do relatório está vazio. O PDF pode ser gerado mesmo assim.');
+    if (estado.obra.trim() === '') {
+      avisos.push('O campo "Obra" está vazio. O PDF pode ser gerado mesmo assim.');
     }
     return { ok: erros.length === 0, erros: erros, avisos: avisos };
   }
@@ -329,8 +335,11 @@
   function ligarCampos() {
     // Os campos podem voltar preenchidos (o navegador restaura ao recarregar),
     // então o estado é lido da tela antes de ligar os eventos.
-    estado.titulo = el.titulo.value;
-    estado.subtitulo = el.subtitulo.value;
+    estado.obra = el.obra.value;
+    estado.endereco = el.endereco.value;
+    estado.responsavel = el.responsavel.value;
+    estado.atividades = el.atividades.value;
+    estado.observacoes = el.observacoes.value;
     estado.dataInicial = el.dataInicial.value;
     estado.dataFinal = el.dataFinal.value;
     estado.tituloProximos = el.tituloProximos.value;
@@ -340,8 +349,9 @@
     var qualidadeMarcada = document.querySelector('input[name="qualidade"]:checked');
     estado.qualidade = qualidadeMarcada ? qualidadeMarcada.value : 'normal';
 
-    el.titulo.addEventListener('input', function () { estado.titulo = el.titulo.value; });
-    el.subtitulo.addEventListener('input', function () { estado.subtitulo = el.subtitulo.value; });
+    ['obra', 'endereco', 'responsavel', 'atividades', 'observacoes'].forEach(function (campo) {
+      el[campo].addEventListener('input', function () { estado[campo] = el[campo].value; });
+    });
     el.dataInicial.addEventListener('input', function () { estado.dataInicial = el.dataInicial.value; });
     el.dataFinal.addEventListener('input', function () { estado.dataFinal = el.dataFinal.value; });
     el.tituloProximos.addEventListener('input', function () { estado.tituloProximos = el.tituloProximos.value; });
