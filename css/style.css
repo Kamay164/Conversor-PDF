@@ -1,24 +1,34 @@
-/* Conversor de Fotos para Relatório em PDF – estilos da página */
+/* Conversor de Fotos para Relatório em PDF – estilos da página
+ * Identidade visual da Tecno Construções: laranja, grafite, cinza quente e Montserrat.
+ */
+
+/* ---------- Fonte Montserrat (licença OFL, arquivos locais em vendor/fonts) ---------- */
+@font-face { font-family: "Montserrat"; font-weight: 400; font-style: normal; font-display: swap; src: url("../vendor/fonts/montserrat-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 500; font-style: normal; font-display: swap; src: url("../vendor/fonts/montserrat-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 600; font-style: normal; font-display: swap; src: url("../vendor/fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 700; font-style: normal; font-display: swap; src: url("../vendor/fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
 
 :root {
-  --laranja: #e8851c;
-  --laranja-escuro: #c96d0d;
-  --grafite: #26292e;
-  --cinza-texto: #5b6169;
-  --cinza-borda: #d9dce1;
-  --cinza-fundo: #f4f5f7;
+  --laranja: #ff6a00;
+  --laranja-escuro: #e05f00;
+  --laranja-claro: #fff1e6;
+  --grafite: #1f1f1f;
+  --cinza-texto: #6b6b6b;
+  --cinza-borda: #e4e2de;
+  --cinza-fundo: #f3f2f0;
   --branco: #ffffff;
   --vermelho: #b3261e;
   --raio: 10px;
+  --fonte: "Montserrat", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.45;
+  font-family: var(--fonte);
+  font-size: 15px;
+  line-height: 1.5;
   color: var(--grafite);
   background: var(--cinza-fundo);
 }
@@ -32,49 +42,79 @@ body {
 
 /* ---------- Topo ---------- */
 .topo {
-  background: var(--grafite);
-  color: var(--branco);
-  padding: 22px 0;
-  border-bottom: 4px solid var(--laranja);
+  position: relative;
+  overflow: hidden;
+  padding: 26px 0 24px;
+  background: linear-gradient(135deg, var(--branco) 0%, #e9e7e3 100%);
+  border-bottom: 1px solid var(--cinza-borda);
 }
-.topo h1 { margin: 0 0 2px; font-size: 1.5rem; }
-.topo p { margin: 0; color: #c9ccd2; }
+.topo .container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.logo-topo img { display: block; width: 190px; max-width: 100%; height: auto; }
+.titulo-topo {
+  padding-left: 16px;
+  border-left: 3px solid var(--laranja);
+}
+.titulo-topo h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.titulo-topo p { margin: 4px 0 0; font-size: 0.8rem; color: var(--cinza-texto); }
+/* "C" decorativo, só contorno laranja, sai pela borda do cabeçalho */
+.letra-c {
+  position: absolute;
+  right: -70px;
+  bottom: -90px;
+  width: 260px;
+  height: 260px;
+  opacity: 0.35;
+  pointer-events: none;
+}
 
 /* ---------- Cartões ---------- */
-main { padding-top: 24px; padding-bottom: 48px; }
+main.container { padding-top: 24px; padding-bottom: 40px; }
 
 .cartao {
   background: var(--branco);
   border: 1px solid var(--cinza-borda);
   border-radius: var(--raio);
-  padding: 20px;
+  padding: 22px;
   margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(31, 31, 31, 0.04);
 }
 .cartao h2 {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
-  margin: 0 0 16px;
-  font-size: 1.2rem;
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cinza-borda);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .numero {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--laranja);
-  color: var(--branco);
-  font-size: 0.95rem;
+  color: var(--laranja);
   font-weight: 700;
 }
+.numero::after { content: "."; }
 
 /* ---------- Campos ---------- */
 .campo { margin-bottom: 14px; flex: 1; min-width: 0; }
-.campo label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.92rem; }
+.campo label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.85rem; }
 .opcional { font-weight: 400; color: var(--cinza-texto); }
-.dica { margin: 0 0 8px; color: var(--cinza-texto); font-size: 0.92rem; }
+.dica { margin: 0 0 8px; color: var(--cinza-texto); font-size: 0.85rem; }
 
 input[type="text"],
 input[type="date"],
@@ -87,6 +127,9 @@ textarea {
   border: 1px solid var(--cinza-borda);
   border-radius: 8px;
 }
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus { border-color: var(--laranja); }
 textarea { resize: vertical; }
 input:focus-visible,
 textarea:focus-visible,
@@ -94,7 +137,7 @@ button:focus-visible,
 .botao:focus-visible,
 .area-envio:focus-within,
 .opcao input:focus-visible + .opcao-visual {
-  outline: 3px solid rgba(232, 133, 28, 0.45);
+  outline: 3px solid rgba(255, 106, 0, 0.35);
   outline-offset: 1px;
 }
 
@@ -114,9 +157,10 @@ button {
   font-weight: 600;
   text-align: center;
 }
-.botao-primario { background: var(--laranja); color: var(--branco); }
+/* Texto grafite sobre o laranja: contraste bem melhor que branco */
+.botao-primario { background: var(--laranja); color: var(--grafite); }
 .botao-primario:hover { background: var(--laranja-escuro); }
-.botao-secundario { background: var(--branco); color: var(--grafite); border-color: var(--cinza-borda); }
+.botao-secundario { background: var(--branco); color: var(--grafite); border-color: var(--grafite); }
 .botao-secundario:hover { background: var(--cinza-fundo); }
 .botao-texto {
   background: none;
@@ -127,7 +171,7 @@ button {
 }
 .botao-texto:hover { color: var(--grafite); }
 .botao-perigo { color: var(--vermelho); }
-.botao-grande { padding: 14px 28px; font-size: 1.05rem; }
+.botao-grande { padding: 14px 28px; font-size: 0.95rem; letter-spacing: 0.04em; }
 
 .botao-icone {
   width: 36px;
@@ -140,16 +184,6 @@ button {
 }
 .botao-icone:hover { background: var(--cinza-fundo); }
 
-/* ---------- Logo fixo ---------- */
-.logo-topo {
-  display: inline-block;
-  padding: 8px 14px;
-  margin-bottom: 12px;
-  background: var(--branco);
-  border-radius: 8px;
-}
-.logo-topo img { display: block; width: 180px; max-width: 100%; height: auto; }
-
 /* ---------- Fotos ---------- */
 .area-envio {
   display: flex;
@@ -160,12 +194,12 @@ button {
   text-align: center;
   color: var(--cinza-texto);
   background: var(--cinza-fundo);
-  border: 2px dashed #b8bcc4;
+  border: 2px dashed #c9c6c0;
   border-radius: var(--raio);
   cursor: pointer;
 }
-.area-envio strong { color: var(--grafite); font-size: 1.05rem; }
-.area-envio:hover { border-color: var(--laranja); background: #fff7ee; }
+.area-envio strong { color: var(--grafite); font-size: 1rem; }
+.area-envio:hover { border-color: var(--laranja); background: var(--laranja-claro); }
 
 .lista-cabecalho {
   display: flex;
@@ -219,9 +253,9 @@ button {
   border-radius: var(--raio);
   background: var(--branco);
 }
-.opcao-visual small { color: var(--cinza-texto); font-size: 0.8rem; }
-.opcao:hover .opcao-visual { border-color: #f0bd85; }
-.opcao input:checked + .opcao-visual { border-color: var(--laranja); background: #fff7ee; }
+.opcao-visual small { color: var(--cinza-texto); font-size: 0.75rem; }
+.opcao:hover .opcao-visual { border-color: #ffb27a; }
+.opcao input:checked + .opcao-visual { border-color: var(--laranja); background: var(--laranja-claro); }
 
 .miniatura-layout {
   display: grid;
@@ -231,10 +265,11 @@ button {
   padding: 4px;
   margin-bottom: 4px;
   background: var(--branco);
-  border: 1px solid #9aa0a8;
+  border: 1px solid #9a9893;
   border-radius: 3px;
 }
-.miniatura-layout i { background: #c3c7ce; border-radius: 2px; }
+.miniatura-layout i { background: #cfccc6; border-radius: 2px; }
+.opcao input:checked + .opcao-visual .miniatura-layout i { background: var(--laranja); }
 .miniatura-layout.um { grid-template-rows: 1fr; }
 .miniatura-layout.dois { grid-template-rows: 1fr 1fr; }
 .miniatura-layout.quatro { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
@@ -247,7 +282,26 @@ button {
 
 /* ---------- Ações finais ---------- */
 .acoes { display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 16px; }
-.rodape-nota { text-align: center; color: var(--cinza-texto); font-size: 0.85rem; }
+.rodape-nota { text-align: center; color: var(--cinza-texto); font-size: 0.8rem; }
+
+/* ---------- Rodapé da página ---------- */
+.rodape {
+  background: var(--grafite);
+  color: var(--branco);
+  padding: 18px 0;
+}
+.rodape .container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.rodape .linha-laranja { flex: 1; height: 1px; background: var(--laranja); }
+.rodape span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
 
 /* ---------- Telas médias ---------- */
 @media (max-width: 820px) and (min-width: 641px) {
@@ -256,6 +310,9 @@ button {
 
 /* ---------- Telas estreitas ---------- */
 @media (max-width: 640px) {
+  .topo .container { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .logo-topo img { width: 160px; }
+  .letra-c { width: 200px; height: 200px; right: -70px; bottom: -90px; opacity: 0.25; }
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
   .item-foto { flex-wrap: wrap; }
@@ -267,6 +324,7 @@ button {
   .miniatura-layout { margin-bottom: 0; flex: 0 0 auto; }
   .acoes { flex-direction: column-reverse; }
   .acoes .botao { width: 100%; }
+  .rodape span { letter-spacing: 0.2em; }
 }
 
 /* ---------- Mensagens, progresso e estados ---------- */
@@ -280,7 +338,7 @@ button {
   padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
 }
 .aviso-erro   { background: #fdecea; border-color: #f2b8b5; color: #7a1a14; }
 .aviso-alerta { background: #fff4d6; border-color: #f0d38a; color: #6b4a00; }
@@ -297,9 +355,9 @@ button {
 }
 .aviso-fechar:hover { opacity: 1; }
 
-.progresso { margin: 10px 0 0; font-weight: 600; color: var(--laranja-escuro); }
+.progresso { margin: 10px 0 0; font-weight: 600; color: var(--grafite); }
 .vazio { margin: 8px 0 0; padding: 16px; text-align: center; color: var(--cinza-texto); background: var(--cinza-fundo); border-radius: 8px; }
-.area-envio.arrastando { border-color: var(--laranja); background: #fff0dd; }
+.area-envio.arrastando { border-color: var(--laranja); background: #ffe6d2; }
 
 button:disabled { cursor: not-allowed; opacity: 0.4; }
 .botao-texto:disabled { text-decoration: none; }

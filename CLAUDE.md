@@ -191,7 +191,7 @@ Referências enviadas pelo usuário (26/10/2026): kit de identidade visual da Te
 | 5 — Revisão e README | ✅ Concluída | Revisão do código, README.md (uso online), .gitignore com referencia/ e demo/. Extras: qualidade Normal/Alta e layout "Tamanho da foto" |
 | 6 — Plano da fase 2 | 🔄 Aguardando verificação | Decisões de identidade visual registradas |
 | 7 — Logo fixo | 🔄 Aguardando verificação | Logo embutido em `js/logo.js` (provisório); upload removido; arquivos antigos ainda não apagados |
-| 8 — Visual do site | ⬜ Pendente | |
+| 8 — Visual do site | 🔄 Aguardando verificação | Montserrat local em `vendor/fonts/` (OFL), paleta Tecno, topo em degradê com logo + "RELATÓRIO DE OBRA" + C decorativo, rodapé grafite. Logo-padrao.js e logo-tecno.jpg: apagar à mão |
 | 9 — Campos novos | ⬜ Pendente | |
 | 10 — Novo layout do PDF | ⬜ Pendente | |
 | 11 — Testes e documentação | ⬜ Pendente | |
