@@ -73,29 +73,21 @@ body::after {
 .topo {
   position: relative;
   overflow: hidden;
-  padding: 38px 0 36px;
+  padding: 14px 0 16px;
   background: linear-gradient(135deg, var(--branco) 0%, #e9e7e3 100%);
-  border-bottom: 1px solid var(--cinza-borda);
-}
-/* linhas diagonais finas (desenho técnico), mais fortes à direita */
-.topo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(135deg, rgba(255, 106, 0, 0.10) 0 1px, transparent 1px 16px);
-  -webkit-mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 35%, #000 100%);
-  pointer-events: none;
+  border-bottom: 4px solid var(--laranja);
 }
 .topo .container {
+  max-width: 1280px;
+  padding: 0 150px 0 40px;
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
+  gap: 20px;
 }
-.logo-topo img { display: block; width: 155px; max-width: 100%; height: auto; }
+.logo-topo img { display: block; width: 130px; max-width: 100%; height: auto; }
 .titulo-topo {
   padding-left: 16px;
   border-left: 3px solid var(--laranja);
@@ -109,19 +101,30 @@ body::after {
   text-transform: uppercase;
 }
 .titulo-topo p { margin: 4px 0 0; font-size: 0.8rem; color: var(--cinza-texto); }
-/* "C" decorativo, só contorno laranja, sai pela borda do cabeçalho */
-.letra-c {
+/* Faixas inclinadas laranja no canto direito (substituem o "C" do topo) */
+.topo::before,
+.topo::after {
+  content: "";
   position: absolute;
-  right: -70px;
-  bottom: -90px;
-  width: 260px;
-  height: 260px;
-  opacity: 0.35;
+  top: 0;
+  bottom: 0;
   pointer-events: none;
+}
+.topo::before {
+  right: 0;
+  width: 110px;
+  background: var(--laranja);
+  clip-path: polygon(55% 0, 100% 0, 100% 100%, 0 100%);
+}
+.topo::after {
+  right: 90px;
+  width: 36px;
+  background: rgba(255, 106, 0, 0.35);
+  clip-path: polygon(55% 0, 100% 0, 45% 100%, 0 100%);
 }
 
 /* ---------- Cartões ---------- */
-main.container { padding-top: 24px; padding-bottom: 40px; }
+main.container { padding-top: 18px; padding-bottom: 40px; }
 
 .cartao {
   background: var(--branco);
@@ -363,9 +366,10 @@ button {
 
 /* ---------- Telas estreitas ---------- */
 @media (max-width: 640px) {
-  .topo .container { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .logo-topo img { width: 140px; }
-  .letra-c { width: 200px; height: 200px; right: -70px; bottom: -90px; opacity: 0.25; }
+  .topo .container { padding: 0 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .topo::before { width: 60px; }
+  .topo::after { right: 48px; width: 20px; }
+  .logo-topo img { width: 120px; }
   .cartao { padding: 16px; }
   .linha { flex-direction: column; gap: 0; }
   .item-foto { flex-wrap: wrap; }
