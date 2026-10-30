@@ -47,8 +47,8 @@
     tituloSecao:  { fonte: 'negrito', tamanho: 10,  cor: COR.grafite, espaco: 0.35 },
     tabela:       { fonte: 'normal',  tamanho: 8.5, cor: COR.grafite, linha: 1.35 },
     texto:        { fonte: 'normal',  tamanho: 9,   cor: COR.grafite, linha: 1.45 },
-    tituloFoto:   { fonte: 'semi',    tamanho: 8.5, cor: COR.grafite, linha: 1.3 },
-    tituloFaixa:  { fonte: 'semi',    tamanho: 10,  cor: COR.grafite, linha: 1.3 },
+    tituloFoto:   { fonte: 'negrito', tamanho: 10.5, cor: COR.grafite, linha: 1.3 },
+    tituloFaixa:  { fonte: 'negrito', tamanho: 12,  cor: COR.grafite, linha: 1.3 },
     assinatura:   { fonte: 'semi',    tamanho: 8.5, cor: COR.grafite },
     rodape:       { fonte: 'semi',    tamanho: 6.5, cor: COR.branco, espaco: 0.9 },
     pagina:       { fonte: 'normal',  tamanho: 6.5, cor: COR.rodapeTexto, espaco: 0.4 }
